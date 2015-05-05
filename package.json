@@ -1,0 +1,22 @@
+{
+  "name": "fuckr",
+  "version": "1.0.0",
+  "description": "Desktop grindr client for Mac and Windows",
+  "main": "build.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/tomlandia/fuckr.git"
+  },
+  "author": "@tomlandia",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/tomlandia/fuckr/issues"
+  },
+  "homepage": "https://github.com/tomlandia/fuckr",
+  "devDependencies": {
+    "node-webkit-builder": "*"
+  }
+}

@@ -1,0 +1,133 @@
+body {
+    background-color: #191818;
+    color: white;
+}
+a {
+    color: white;
+    text-decoration: none;
+}
+
+#logo-bar {
+    width: 100%;
+    height: 5em;
+    background: linear-gradient(#ED1E79, #9E005D);
+}
+#logo {
+    height: 4.8em;
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.pure-form {
+    letter-spacing: normal;
+    text-align: center;
+}
+.small-input { /* pure-input-1-* behaves weirdly */
+    width: 4em !important;
+}
+
+.icons {
+    text-align: center;
+    letter-spacing: 2em;
+}
+.conversation {
+    border-bottom: 1px solid #ddd;
+    padding: 1em 1em;
+    height: 4em !important;
+}
+.button-error,
+.button-secondary {
+    color: white;
+    border-radius: 4px;
+    text-shadow: 0 1px 1px rgba(0, 0, 0, 0.2);
+}
+.button-error {
+    background: rgb(202, 60, 60);
+}
+.button-secondary {
+    background: rgb(66, 184, 221);
+}
+
+
+/* from http://codepen.io/samuelkraft/pen/Farhl */
+#bubbles {
+    font-family: "Helvetica Neue", sans-serif;
+    font-size: 1.1em;
+    font-weight: normal;
+    padding: 0 14px 0 14px;
+}
+#bubbles div {
+    max-width: 51%;
+    word-wrap: break-word;
+    margin-bottom: 10px;
+    line-height: 24px;
+}
+
+.clear {
+    clear: both;
+}
+
+.from-me {
+    position: relative;
+    padding: 10px 20px;
+    color: white;
+    background: #FF0066;
+    border-radius: 25px;
+    float: right;
+}
+.from-me:before {
+    content: "";
+    position: absolute;
+    z-index: -1;
+    bottom: -2px;
+    right: -7px;
+    height: 20px;
+    border-right: 20px solid #FF0066;
+    border-bottom-left-radius: 16px 14px;
+    -webkit-transform: translate(0, -2px);
+}
+.from-me:after {
+    content: "";
+    position: absolute;
+    z-index: 1;
+    bottom: -2px;
+    right: -56px;
+    width: 26px;
+    height: 20px;
+    background: black;
+    border-bottom-left-radius: 10px;
+    -webkit-transform: translate(-30px, -2px);
+}
+
+.from-them {
+    position: relative;
+    padding: 25px 20px;
+    background: #FFE500;
+    border-radius: 25px;
+    color: black;
+    float: left;
+}
+.from-them:before {
+    content: "";
+    position: absolute;
+    z-index: 2;
+    bottom: -2px;
+    left: -7px;
+    height: 20px;
+    border-left: 20px solid #FFE500;
+    border-bottom-right-radius: 16px 14px;
+    -webkit-transform: translate(0, -2px);
+}
+.from-them:after {
+    content: "";
+    position: absolute;
+    z-index: 3;
+    bottom: -2px;
+    left: 4px;
+    width: 26px;
+    height: 20px;
+    background: black;
+    border-bottom-right-radius: 10px;
+    -webkit-transform: translate(-30px, -2px);
+}

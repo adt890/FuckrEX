@@ -1,0 +1,68 @@
+<div class="pure-u-1-2">
+  <!-- Filter form top bar -->
+  <div class="pure-g">
+    <form class="pure-form">
+      <fieldset>
+        <label>
+          In
+          <input ng-model="$storage.location" class="pure-input-1-3 pure-input-rounded" id="location" type="text" placeholder="Location">
+            Between
+          <input class="small-input" ng-model="$storage.grindrParams.filter.ageMinimum" ng-click="refresh()" min="18" size="2" type="number">
+          And
+          <input class="small-input" ng-model="$storage.grindrParams.filter.ageMaximum" ng-click="refresh()" size="2" type="number">
+          Photo
+          <input type="checkbox" ng-model="$storage.grindrParams.filter.photoOnly" ng-click="refresh()">
+          Online
+          <input type="checkbox" ng-model="$storage.grindrParams.filter.onlineOnly" ng-click="refresh()">
+        </label>
+      </fieldset>
+    </form>
+  </div>
+
+  <!-- Picture grid-->
+  <div class="pure-g" id="nearby-profiles-container">
+    <a ng-repeat="profile in nearbyProfiles" class="pure-u-1-5" ng-click="open(profile.profileId)">
+      <img class="pure-img" ng-src="http://cdns.grindr.com/images/thumb/187x187/{{profile.profileImageMediaHash}}"/>
+    </a>
+  </div>
+</div>
+
+
+<div class="pure-u-1-2" ng-show="profile">
+  <img class="pure-img" ng-src="http://cdns.grindr.com/images/profile/1024x1024/{{profile.profileImageMediaHash}}"/>
+
+  <h3 id="headline">{{profile.headline}}</h3>
+
+  <p>{{profile.aboutMe}}</p>
+
+  <p class="icons" ng-show="profile.socialNetworks">
+    <a ng-repeat="(name, info) in profile.socialNetworks" target="_blank" href="https://{{name}}.com/{{info.userId}}/">
+      <i class="icon-{{name}}"></i>
+    </a>
+  </p>
+
+  <p ng-show="profile.lookingFor && profile.lookingFor.indexOf(7) != -1" style="color: red">Looking for Right Now</p>
+
+  <table class="pure-table">
+    <thead>
+      <tr>
+        <th>Age</th>
+        <th>Height (m)</th>
+        <th>Weight (kg)</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td>{{profile.age}}</td>
+        <td>{{(profile.height / 100) || ''}}</td>
+        <td>{{(profile.weight / 1000) || ''}}</td>
+      </tr>
+    </tbody>
+  </table>
+
+  <p ng-show="authenticated" class="icons">
+    <a ng-href="#/chat/{{profile.profileId}}">
+      <i class="icon-discussion icon3x"></i>
+    </a>
+  </p>
+</div>

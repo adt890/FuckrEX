@@ -1,0 +1,34 @@
+<div class="pure-u-1-2">
+  <div class="pure-g conversation" ng-repeat="conversation in lastestConversations">
+    <a ng-href="#/profiles/{{conversation.id}}">
+      <div class="pure-u-1-4">
+        <img class="pure-img" ng-src="http://cdns.grindr.com/images/thumb/187x187/{{conversation.thumbnail}}">
+      </div>
+    </a>
+    <a ng-click="open(conversation.id)">
+      <div class="pure-u-3-4">
+        <p>{{conversation.messages[conversation.messages.length - 1].text || 'image'}}</p>
+      </div>
+    </a>
+  </div>
+</div>
+
+<div ng-show="conversationId" id="chat" class="pure-u-1-2">
+  <div id="bubbles">
+    <div ng-repeat-start="message in conversation.messages" class="{{message.fromMe ? 'from-me' : 'from-them'}}">
+      <p ng-if="message.text">{{message.text}}</p>
+      <img class="pure-img" ng-if="message.image" ng-src=http://cdns.grindr.com/grindr/chat/{{message.image}}>
+    </div>
+    <div ng-repeat-end class="clear"></div>
+  </div>
+
+
+  <form class="pure-form">
+    <fieldset class="pure-group">
+      <textarea ng-model="message" class="pure-input-1" rows="5" placeholder=""></textarea>
+    </fieldset>
+
+    <button ng-click="send()" ng-hide="chatError" type="submit" class="pure-button pure-input-1 pure-button-primary">Send</button>
+    <button ng-click="block()" type="submit" class="pure-button pure-input-1 pure-button-error">Block</button>
+  </form>
+</div>

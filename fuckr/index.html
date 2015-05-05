@@ -1,0 +1,49 @@
+<!doctype html>
+<html lang="en">
+
+
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>fuckr</title>
+
+    <link rel="stylesheet" href="css/pure-min.css">
+    <link rel="stylesheet" href="css/mfglabs_iconset.css">
+    <link rel="stylesheet" href="css/fuckr.css">
+
+
+    <script src="https://maps.googleapis.com/maps/api/js?libraries=places"></script>
+    <script src="vendor/underscore-min.js"></script>
+    <script src="vendor/angular.min.js"></script>
+    <script src="vendor/angular-route.min.js"></script>
+    <script src="vendor/ngStorage.min.js"></script>
+    <script src="fuckr.min.js"></script>
+  </head>
+
+
+  <body ng-app="fuckr">
+
+    <div id="logo-bar" class="pure-g">
+      <img id="logo" src="fuckr.png" alt="fuckr">
+    </div>
+
+    <div class="pure-g">
+      <div class="pure-u-1">
+        <p class="icons">
+          <a ng-href="#/profiles/">
+            <i class="icon-reorder_square icon2x"></i>
+          </a>
+          <a ng-show="authenticated" ng-href="#/chat/">
+            <i class="icon-mail icon2x"></i>
+          </a>
+          <a ng-hide="authenticated" ng-href="#/login/">
+            <i class="icon-lock icon2x"></i>
+          </a>
+        </p>
+      </div>
+    </div>
+
+    <div class="pure-g" ng-view>
+    </div>
+  </body>
+</html>
