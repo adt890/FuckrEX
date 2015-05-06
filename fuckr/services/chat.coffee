@@ -100,19 +100,7 @@ chat = ($http, $localStorage, $rootScope, $q, profiles) ->
         lastestConversations: ->
             _.sortBy $localStorage.conversations, (conversation) -> - conversation.lastTimeActive
         
-        getSentImages: -> $localStorage.sentImages
-        uploadImage: (file, width, height) ->
-            deferred = $q.defer()
-            $http
-                method: "POST"
-                url: "https://upload.grindr.com/2.0/chatImage/#{height},0,#{width},0"
-                data: file
-                headers:
-                    'Content-Type': file.type
-            .then (response) ->
-                $localStorage.sentImages.push(response.data.mediaHash)
-                deferred.resolve(response.data.mediaHash)
-            deferred.promise
+        sentImages: $localStorage.sentImages
         sendImage: (imageHash, to) ->
             messageBody = angular.toJson({imageHash: imageHash})
             sendMessage('image', messageBody, to)

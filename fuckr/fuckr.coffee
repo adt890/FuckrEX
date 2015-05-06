@@ -9,6 +9,7 @@ fuckr = angular.module 'fuckr', [
     'chat'
     'chatController'
     'updateLocation'
+    'updateProfileController'
 ]
 
 

@@ -4,7 +4,7 @@ var nw = new NwBuilder({
   platforms: ['osx64'],
   version: '0.12.1',
   appName: 'Fuckr',
-  appVersion: '0.9.9',
+  appVersion: '1.0.0',
   winIco: 'icons/win.ico',
   macIcns: 'icons/mac.icns'
 });

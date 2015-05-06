@@ -45,6 +45,9 @@ a {
 .small-input { /* pure-input-1-* behaves weirdly */
     width: 4em !important;
 }
+legend {
+    color: white;
+}
 
 .icons {
     text-align: center;

@@ -1,4 +1,4 @@
-chatController = ($scope, $routeParams, chat) ->
+chatController = ($scope, $routeParams, chat, uploadImage) ->
     $scope.lastestConversations = chat.lastestConversations()
 
     $scope.open = (id) ->
@@ -17,16 +17,12 @@ chatController = ($scope, $routeParams, chat) ->
 
     
     $scope.showSentImages = ->
-        $scope.sentImages = chat.getSentImages()
+        $scope.sentImages = chat.sentImages
     
     $scope.$watch 'imageFile', ->
-        #Vanilla JS trick to figure out image dimensions...
-        img = new Image
-        img.src = URL.createObjectURL($scope.imageFile)
-        img.onload = ->
-            chat.uploadImage($scope.imageFile, img.width, img.height).then ->
-                $scope.sentImages = chat.getSentImages()
-
+        if $scope.imageFile
+            uploadImage.uploadChatImage($scope.imageFile).then (imageHash) ->
+                chat.sentImages.push(imageHash)
 
     $scope.sendImage = (imageHash) ->
         chat.sendImage(imageHash, $scope.conversationId)
@@ -42,5 +38,5 @@ chatController = ($scope, $routeParams, chat) ->
 
 
 angular.
-    module('chatController', ['ngRoute', 'file-model', 'chat']).
-    controller('chatController', ['$scope', '$routeParams', 'chat', chatController])
+    module('chatController', ['ngRoute', 'file-model', 'chat', 'uploadImage']).
+    controller('chatController', ['$scope', '$routeParams', 'chat', 'uploadImage', chatController])
