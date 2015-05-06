@@ -4,17 +4,22 @@ fuckr is a Grindr™ client for desktop built with Node Webkit, node-xmpp and An
 
 ##Run
 First, install node-webkit (eg. `npm install -g nodewebkit`). Then
+
     cd fuckr/
     npm install
     nw .
 
 ##Package
 Preferably, rum `npm dedupe` in fuckr subdir to save up ~50MB. Then, change platform in `package.js` and:
+
     npm install
     node package.js
+
 And for mac users: 
+
     npm install -g appdmg
     appdmg dmg.json
+
 Due to C++ dependencies of node module dependencies, you shouldn't package for any other platform.
 
 ##Reverse engineering grindr
