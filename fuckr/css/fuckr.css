@@ -2,14 +2,24 @@ body {
     background-color: #191818;
     color: white;
 }
+html, body, #container {
+    height: 100%;
+    padding: 0;
+    margin: 0;
+    overflow: hidden;
+}
 a {
     color: white;
     text-decoration: none;
 }
+.block {
+    display: block;
+    text-align: center;
+}
 
 #logo-bar {
     width: 100%;
-    height: 5em;
+    height: 4em;
     background: linear-gradient(#ED1E79, #9E005D);
 }
 #logo {
@@ -17,6 +27,15 @@ a {
     display: block;
     margin-left: auto;
     margin-right: auto;
+}
+#icon-bar {
+    height: 4em;
+}
+
+.scroll {
+    height: calc(100% - 8em);
+    overflow-x: hidden;
+    overflow-y: scroll;
 }
 
 .pure-form {
@@ -33,8 +52,8 @@ a {
 }
 .conversation {
     border-bottom: 1px solid #ddd;
-    padding: 1em 1em;
-    height: 4em !important;
+    padding: 0; margin: 0;
+    height: 5em !important;
 }
 
 .button-error,
@@ -68,7 +87,7 @@ a {
     max-width: 51%;
     word-wrap: break-word;
     margin-bottom: 10px;
-    line-height: 24px;
+    line-height: 20px;
 }
 
 .clear {
@@ -109,7 +128,7 @@ a {
 
 .from-them {
     position: relative;
-    padding: 25px 20px;
+    padding: 10px 20px;
     background: #FFE500;
     border-radius: 25px;
     color: black;

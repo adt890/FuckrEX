@@ -1,20 +1,20 @@
-<div class="pure-u-1-2">
+<div class="pure-u-1-2 scroll">
   <div class="pure-g conversation" ng-repeat="conversation in lastestConversations">
-    <a ng-href="#/profiles/{{conversation.id}}">
-      <div class="pure-u-1-4">
-        <img class="pure-img" ng-src="http://cdns.grindr.com/images/thumb/187x187/{{conversation.thumbnail}}">
-      </div>
+    <a class="pure-u-1-6 block;" ng-href="#/profiles/{{conversation.id}}">
+      <img class="pure-img" ng-src="http://cdns.grindr.com/images/thumb/187x187/{{conversation.thumbnail}}">
     </a>
-    <a ng-click="open(conversation.id)">
-      <div class="pure-u-3-4">
-        <p>{{conversation.messages[conversation.messages.length - 1].text || 'image'}}</p>
-      </div>
+    <a class="pure-u-5-6 block" ng-click="open(conversation.id)">
+      <p>{{conversation.messages[conversation.messages.length - 1].text || '***IMAGE***'}}<p>
+      <!-- FIXIT: ridiculously long inline expression -->
+      <p ng-if="(conversation.messages[conversation.messages.length - 1].text || '').length < 40">
+      {{conversation.messages[conversation.messages.length - 2].text || ''}}
+      <p>
     </a>
   </div>
 </div>
 
 
-<div ng-show="conversationId" class="pure-u-1-2">
+<div ng-show="conversationId" class="pure-u-1-2 scroll">
 
   <div id="bubbles">
     <div ng-repeat-start="message in conversation.messages" class="{{message.fromMe ? 'from-me' : 'from-them'}}">
@@ -35,7 +35,7 @@
   </form>
 
   <div ng-show="sentImages" class="pure-g">
-    <img ng-repeat="imageHash in sentImages track by $index"
+    <img ng-repeat="imageHash in sentImages"
          ng-src="http://cdns.grindr.com/grindr/chat/{{imageHash}}" ng-click='sendImage(imageHash)' class="pure-u-1-3 pure-img sent-image">
     <div class="pure-u-1-1 icons">
       <label for="upload-image">
