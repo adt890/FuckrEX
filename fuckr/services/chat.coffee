@@ -35,7 +35,7 @@ chat = ($http, $localStorage, $rootScope, $q, profiles) ->
             $localStorage.conversations[id].lastTimeActive = message.timestamp
             message = switch message.type
                 when 'text' then {text: message.body}
-                when 'location' then {text: '*SENT LOCATION*'}
+                when 'map' then {location: angular.fromJson(message.body)}
                 when 'image' then {image: angular.fromJson(message.body).imageHash}
                 else {text: message.type + ' ' + message.body}
             message.fromMe = fromMe
@@ -55,7 +55,7 @@ chat = ($http, $localStorage, $rootScope, $q, profiles) ->
             password: token
             host: 'chat.grindr.com'
             preferred: 'PLAIN'
-            disallowTLS: true
+            #disallowTLS: true
         xmpp.on 'online', (data) ->
             chat.connected = true
             $http.get('https://primus.grindr.com/2.0/undeliveredChatMessages').then (response) ->
@@ -116,6 +116,12 @@ chat = ($http, $localStorage, $rootScope, $q, profiles) ->
         sendImage: (imageHash, to) ->
             messageBody = angular.toJson({imageHash: imageHash})
             sendMessage('image', messageBody, to)
+
+        sendLocation: (to) ->
+            messageBody = angular.toJson
+                lat: $localStorage.grindrParams.lat
+                lon: $localStorage.grindrParams.lon
+            sendMessage('map', messageBody, to)
 
         block: (id) ->
             sendMessage('block', null, id)

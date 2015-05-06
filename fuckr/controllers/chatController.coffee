@@ -31,6 +31,8 @@ chatController = ($scope, $routeParams, chat) ->
     $scope.sendImage = (imageHash) ->
         chat.sendImage(imageHash, $scope.conversationId)
         
+    $scope.sendLocation = ->
+        chat.sendLocation($scope.conversationId)
 
     $scope.block = ->
         if confirm('Sure you want to block him?')

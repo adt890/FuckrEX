@@ -4,9 +4,10 @@
       <img class="pure-img" ng-src="http://cdns.grindr.com/images/thumb/187x187/{{conversation.thumbnail}}">
     </a>
     <a class="pure-u-5-6 block" ng-click="open(conversation.id)">
-      <p>{{conversation.messages[conversation.messages.length - 1].text || '***IMAGE***'}}<p>
+      {{lastMessage = conversation.messages[conversation.messages.length - 1]; ""}}
+      <p>{{lastMessage.text || (lastMessage.image ? '***IMAGE***' : '***LOCATION')}}<p>
       <!-- FIXIT: ridiculously long inline expression -->
-      <p ng-if="(conversation.messages[conversation.messages.length - 1].text || '').length < 40">
+      <p ng-if="(lastMessage.text || '').length < 40">
       {{conversation.messages[conversation.messages.length - 2].text || ''}}
       <p>
     </a>
@@ -19,6 +20,8 @@
   <div id="bubbles">
     <div ng-repeat-start="message in conversation.messages" class="{{message.fromMe ? 'from-me' : 'from-them'}}">
       <p ng-if="message.text">{{message.text}}</p>
+      <a ng-if="message.location" target="_blank"
+         ng-href="https://maps.google.com/?ie=UTF8&hq=&ll={{message.location.lat}},{{message.location.lon}}&z=13">*LOCATION*</a> 
       <img class="pure-img" ng-if="message.image" ng-src=http://cdns.grindr.com/grindr/chat/{{message.image}}>
     </div>
     <div ng-repeat-end class="clear"></div>
@@ -31,6 +34,7 @@
 
     <button ng-click="sendText()" ng-hide="chatError" type="submit" class="pure-button pure-input-1 pure-button-primary">Send</button>
     <button ng-click="showSentImages()" ng-hide="chatError" type="submit" class="pure-button pure-input-1 button-secondary">Send Image</button>
+    <button ng-click="sendLocation()" ng-hide="chatError || sentImages" type="submit" class="pure-button pure-input-1">Send Location</button>
     <button ng-click="block()" ng-hide="sentImages" type="submit" class="pure-button pure-input-1 button-error">Block</button>
   </form>
 
