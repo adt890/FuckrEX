@@ -43,6 +43,10 @@ chat = ($http, $localStorage, $rootScope, $q, profiles) ->
 
 
         $rootScope.$broadcast('new_message')
+
+
+    acknowledgeMessages = (messageIds) ->
+        $http.post('https://primus.grindr.com/2.0/confirmChatMessagesDelivered', {messageIds: messageIds})
     
 
     $rootScope.$on 'authenticated', (event, token) ->
@@ -55,18 +59,20 @@ chat = ($http, $localStorage, $rootScope, $q, profiles) ->
         xmpp.on 'online', (data) ->
             chat.connected = true
             $http.get('https://primus.grindr.com/2.0/undeliveredChatMessages').then (response) ->
-                data = messageIds: []
+                messageIds = []
                 _(response.data).sortBy((message) -> message.timestamp).forEach (message) ->
                     addMessage(message)
-                    data.messageIds.push(message.messageId)
-                if data.messageIds.length > 0
-                    $http.post('https://primus.grindr.com/2.0/confirmChatMessagesDelivered', data)
+                    messageIds.push(message.messageId)
+                if messageIds.length > 0
+                    acknowledgeMessages(messageIds)
 
         #bypassing simple-xmpp as xmpp.on 'message' doesn't work here
         xmpp.conn.on 'stanza', (stanza) ->
             if stanza.is('message')
                 message = angular.fromJson(stanza.getChildText('body'))
                 addMessage(message)
+                #UGLY: acknowledging XMPP messages with HTTP
+                acknowledgeMessages([message.messageId])
 
         xmpp.on 'error', (message) ->
             $rootScope.chatError = true
