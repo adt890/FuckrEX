@@ -18,7 +18,7 @@
     <script src="vendor/angular-route.min.js"></script>
     <script src="vendor/ngStorage.min.js"></script>
     <script src="vendor/angular-file-model.js"></script>
-    <script src="fuckr.min.js"></script>
+    <script src="fuckr.js"></script>
   </head>
 
 
@@ -37,8 +37,11 @@
           <a ng-show="authenticated" ng-href="#/chat/">
             <i class="icon-mail icon2x"></i>
           </a>
-          <a ng-hide="authenticated" ng-href="#/login/">
+          <a ng-hide="authenticated" ng-href="#/login">
             <i class="icon-lock icon2x"></i>
+          </a>
+          <a ng-show="authenticated" ng-href="#/updateProfile">
+            <i class="icon-settings icon2x"></i>
           </a>
         </p>
       </div>
