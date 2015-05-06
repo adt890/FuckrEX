@@ -1,4 +1,4 @@
-chatController = ($scope, $routeParams, $location, chat) ->
+chatController = ($scope, $routeParams, chat) ->
     $scope.lastestConversations = chat.lastestConversations()
 
     $scope.open = (id) ->
@@ -35,9 +35,10 @@ chatController = ($scope, $routeParams, $location, chat) ->
     $scope.block = ->
         if confirm('Sure you want to block him?')
             chat.block($scope.conversationId)
-            $location.path('/chat/')
+            $scope.conversationId = null
+            $scope.lastestConversations = chat.lastestConversations()
 
 
 angular.
     module('chatController', ['ngRoute', 'file-model', 'chat']).
-    controller('chatController', ['$scope', '$routeParams', '$location', 'chat', chatController])
+    controller('chatController', ['$scope', '$routeParams', 'chat', chatController])

@@ -28,8 +28,8 @@ chat = ($http, $localStorage, $rootScope, $q, profiles) ->
         return if profiles.isBlocked(id)
 
         if message.type == 'block'
-            profiles.blockedBy(id)
             delete $localStorage.conversations[id] if $localStorage.conversations[id]
+            if fromMe then profiles.block(id) else profiles.blockedBy(id)
         else
             createConversation(id) unless $localStorage.conversations[id]
             $localStorage.conversations[id].lastTimeActive = message.timestamp
@@ -51,7 +51,7 @@ chat = ($http, $localStorage, $rootScope, $q, profiles) ->
             password: token
             host: 'chat.grindr.com'
             preferred: 'PLAIN'
-            #disallowTLS: true
+            disallowTLS: true
         xmpp.on 'online', (data) ->
             chat.connected = true
             $http.get('https://primus.grindr.com/2.0/undeliveredChatMessages').then (response) ->
@@ -112,8 +112,7 @@ chat = ($http, $localStorage, $rootScope, $q, profiles) ->
             sendMessage('image', messageBody, to)
 
         block: (id) ->
-            delete $localStorage.conversations[id] if $localStorage.conversations[id]
-            profiles.block(id)
+            sendMessage('block', null, id)
     }
 
 
