@@ -51,7 +51,7 @@ chat = ($http, $localStorage, $rootScope, $q, profiles) ->
             password: token
             host: 'chat.grindr.com'
             preferred: 'PLAIN'
-            disallowTLS: true
+            #disallowTLS: true
         xmpp.on 'online', (data) ->
             chat.connected = true
             $http.get('https://primus.grindr.com/2.0/undeliveredChatMessages').then (response) ->
