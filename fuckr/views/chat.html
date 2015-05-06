@@ -13,7 +13,9 @@
   </div>
 </div>
 
-<div ng-show="conversationId" id="chat" class="pure-u-1-2">
+
+<div ng-show="conversationId" class="pure-u-1-2">
+
   <div id="bubbles">
     <div ng-repeat-start="message in conversation.messages" class="{{message.fromMe ? 'from-me' : 'from-them'}}">
       <p ng-if="message.text">{{message.text}}</p>
@@ -22,13 +24,24 @@
     <div ng-repeat-end class="clear"></div>
   </div>
 
-
   <form class="pure-form">
     <fieldset class="pure-group">
       <textarea ng-model="message" class="pure-input-1" rows="5" placeholder=""></textarea>
     </fieldset>
 
-    <button ng-click="send()" ng-hide="chatError" type="submit" class="pure-button pure-input-1 pure-button-primary">Send</button>
-    <button ng-click="block()" type="submit" class="pure-button pure-input-1 pure-button-error">Block</button>
+    <button ng-click="sendText()" ng-hide="chatError" type="submit" class="pure-button pure-input-1 pure-button-primary">Send</button>
+    <button ng-click="showSentImages()" ng-hide="chatError" type="submit" class="pure-button pure-input-1 button-secondary">Send Image</button>
+    <button ng-click="block()" ng-hide="sentImages" type="submit" class="pure-button pure-input-1 button-error">Block</button>
   </form>
+
+  <div ng-show="sentImages" class="pure-g">
+    <img ng-repeat="imageHash in sentImages track by $index"
+         ng-src="http://cdns.grindr.com/grindr/chat/{{imageHash}}" ng-click='sendImage(imageHash)' class="pure-u-1-3 pure-img sent-image">
+    <div class="pure-u-1-1 icons">
+      <label for="upload-image">
+        <i class="icon-plus icon2x"></i>
+      </label>
+      <input type="file" accept="image/jpg,image/jpeg" file-model="imageFile" id="upload-image">
+    </div>
+  </div>
 </div>

@@ -36,6 +36,7 @@ a {
     padding: 1em 1em;
     height: 4em !important;
 }
+
 .button-error,
 .button-secondary {
     color: white;
@@ -47,6 +48,12 @@ a {
 }
 .button-secondary {
     background: rgb(66, 184, 221);
+}
+.sent-image {
+    max-height: 200px !important;
+}
+#upload-image {
+    display: none !important;
 }
 
 

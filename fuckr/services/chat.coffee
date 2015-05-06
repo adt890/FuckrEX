@@ -72,24 +72,44 @@ chat = ($http, $localStorage, $rootScope, $q, profiles) ->
             $rootScope.chatError = true
             alert("chat error: #{message}")
 
+
+    sendMessage = (type, body, to) ->
+        message =
+            targetProfileId: String(to)
+            type: type
+            messageId: uuid()
+            timestamp: Date.now()
+            sourceDisplayName: ''
+            sourceProfileId: String($localStorage.profileId)
+            body: body
+        xmpp.send("#{to}@chat.grindr.com", angular.toJson(message))
+        addMessage(message)
+
     return {
-        send: (text, to) ->
-            message =
-                targetProfileId: String(to)
-                type: 'text'
-                messageId: uuid()
-                timestamp: Date.now()
-                sourceDisplayName: ''
-                sourceProfileId: String($localStorage.profileId)
-                body: text
-            xmpp.send("#{to}@chat.grindr.com", angular.toJson(message))
-            addMessage(message)
+        sendText: (text, to) ->
+            sendMessage('text', text, to)
 
         getConversation: (id) ->
             $localStorage.conversations[id]
         lastestConversations: ->
             _.sortBy $localStorage.conversations, (conversation) -> - conversation.lastTimeActive
-            #_.toArray $localStorage.conversations
+        
+        getSentImages: -> $localStorage.sentImages
+        uploadImage: (file, width, height) ->
+            deferred = $q.defer()
+            $http
+                method: "POST"
+                url: "https://upload.grindr.com/2.0/chatImage/#{height},0,#{width},0"
+                data: file
+                headers:
+                    'Content-Type': file.type
+            .then (response) ->
+                $localStorage.sentImages.push(response.data.mediaHash)
+                deferred.resolve(response.data.mediaHash)
+            deferred.promise
+        sendImage: (imageHash, to) ->
+            messageBody = angular.toJson({imageHash: imageHash})
+            sendMessage('image', messageBody, to)
 
         block: (id) ->
             delete $localStorage.conversations[id] if $localStorage.conversations[id]
