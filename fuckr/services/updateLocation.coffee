@@ -5,7 +5,7 @@ updateLocation = ($rootScope, $http, $localStorage, $interval) ->
                 lat: $localStorage.grindrParams.lat
                 lon: $localStorage.grindrParams.lon
                 profileId: $localStorage.profileId
-        , 60000
+        , 90000
 angular
     .module('updateLocation', [])
     .service('updateLocation', ['$rootScope', '$http', '$localStorage', '$interval', updateLocation])

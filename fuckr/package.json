@@ -4,7 +4,7 @@
   "main": "index.html",
   "window": {
     "title": "Fuckr",
-    "toolbar": false,
+    "toolbar": true,
     "resizable": true,
     "position": "center",
     "width": 1024,

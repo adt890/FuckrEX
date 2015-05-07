@@ -20,7 +20,7 @@
     <div ng-repeat-start="message in conversation.messages" class="{{message.fromMe ? 'from-me' : 'from-them'}}">
       <p ng-if="message.text">{{message.text}}</p>
       <a ng-if="message.location" target="_blank"
-         ng-href="https://maps.google.com/?ie=UTF8&hq=&ll={{message.location.lat}},{{message.location.lon}}&z=13">*LOCATION*</a> 
+         ng-href="https://maps.google.com/?q=loc:{{message.location.lat}},{{message.location.lon}}">*LOCATION*</a> 
       <img class="pure-img" ng-if="message.image" ng-src=http://cdns.grindr.com/grindr/chat/{{message.image}}>
     </div>
     <div ng-repeat-end class="clear"></div>

@@ -1,4 +1,4 @@
-profilesController = ($scope, $interval, $localStorage, $routeParams, profiles) ->
+profilesController = ($scope, $interval, $localStorage, $routeParams, $window, profiles, pinpoint) ->
     $scope.$storage = $localStorage.$default
         location: 'San Francisco, CA'
         grindrParams:
@@ -28,12 +28,23 @@ profilesController = ($scope, $interval, $localStorage, $routeParams, profiles) 
             $scope.refresh()
 
     $scope.open = (id) ->
+        $scope.isNearbyProfile = parseInt($routeParams.id) != id
         profiles.get(id).then (profile) ->
             $scope.profile = profile
     $scope.open(parseInt($routeParams.id)) if $routeParams.id
 
+    $scope.pinpoint = (id) ->
+        $scope.pinpointing = true
+        pinpoint(id).then(
+            (location) ->
+                $scope.pinpointing = false
+                url = "https://maps.google.com/?q=loc:#{location.lat},#{location.lon}"
+                $window.open(url, '_blank')
+            -> $scope.pinpointing = false
+        )
+
 
 angular
-    .module('profilesController', ['ngRoute', 'ngStorage', 'profiles'])
+    .module('profilesController', ['ngRoute', 'ngStorage', 'profiles', 'pinpoint'])
     .controller 'profilesController',
-               ['$scope', '$interval', '$localStorage', '$routeParams', 'profiles', profilesController]
+               ['$scope', '$interval', '$localStorage', '$routeParams', '$window', 'profiles', 'pinpoint', profilesController]

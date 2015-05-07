@@ -3,7 +3,7 @@ body {
     color: white;
 }
 a, legend {
-    color: white;
+    color: white !important;
     text-decoration: none;
 }
 
@@ -18,7 +18,7 @@ a, legend {
     background: linear-gradient(#ED1E79, #9E005D);
 }
 #logo {
-    height: 4.8em;
+    height: 3.83em;
     display: block;
     margin-left: auto;
     margin-right: auto;
