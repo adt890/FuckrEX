@@ -1,16 +1,15 @@
 <div class="pure-u-1-2 scroll">
   <div class="pure-g conversation" ng-repeat="conversation in lastestConversations">
-    <a class="pure-u-1-6 block;" ng-href="#/profiles/{{conversation.id}}">
-      <img class="pure-img" ng-src="http://cdns.grindr.com/images/thumb/187x187/{{conversation.thumbnail}}">
+    <a ng-href="#/profiles/{{conversation.id}}">
+      <img class="thumbnail" ng-src="http://cdns.grindr.com/images/thumb/187x187/{{conversation.thumbnail}}">
     </a>
-    <a class="pure-u-5-6 block" ng-click="open(conversation.id)">
+    <div class="lastMessages" ng-click="open(conversation.id)">
       {{lastMessage = conversation.messages[conversation.messages.length - 1]; ""}}
-      <p>{{lastMessage.text || (lastMessage.image ? '***IMAGE***' : '***LOCATION')}}<p>
-      <!-- FIXIT: ridiculously long inline expression -->
+      <p>{{lastMessage.text || (lastMessage.image ? '***IMAGE***' : '***LOCATION')}}</p>
       <p ng-if="(lastMessage.text || '').length < 40">
       {{conversation.messages[conversation.messages.length - 2].text || ''}}
-      <p>
-    </a>
+      </p>
+    </div>
   </div>
 </div>
 

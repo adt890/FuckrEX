@@ -14,7 +14,6 @@ a {
 }
 .block {
     display: block;
-    text-align: center;
 }
 
 #logo-bar {
@@ -53,11 +52,25 @@ legend {
     text-align: center;
     letter-spacing: 2em;
 }
+
 .conversation {
     border-bottom: 1px solid #ddd;
-    padding: 0; margin: 0;
-    height: 5em !important;
+    padding: 0;
+    margin: 0 5px;
+    height: 5.5em !important;
 }
+.conversation .thumbnail {
+    float: left;
+    height: 5.5em;
+    width: 5.5em;
+}
+.conversation .lastMessages {
+    width: calc(100% - 5.5em);
+    float: right;
+    text-align: center;
+    letter-spacing: normal;
+}
+
 
 .button-error,
 .button-secondary {
