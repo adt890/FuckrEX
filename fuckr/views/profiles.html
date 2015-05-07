@@ -28,7 +28,7 @@
 </div>
 
 
-<div class="pure-u-1-2 scroll" ng-show="profile">
+<div class="pure-u-1-2 scroll" id="profile" ng-show="profile">
   <img class="pure-img" ng-src="http://cdns.grindr.com/images/profile/1024x1024/{{profile.profileImageMediaHash}}"/>
 
   <h3 id="headline">{{profile.headline}}</h3>
@@ -59,6 +59,10 @@
       </tr>
     </tbody>
   </table>
+
+  <p ng-show="profile.distance">
+    <b>{{profile.distance.toPrecision(3)}} km away</b>
+  </p>
 
   <p ng-show="authenticated" class="icons">
     <a ng-href="#/chat/{{profile.profileId}}">

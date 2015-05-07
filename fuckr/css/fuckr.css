@@ -2,18 +2,14 @@ body {
     background-color: #191818;
     color: white;
 }
-html, body, #container {
-    height: 100%;
-    padding: 0;
-    margin: 0;
-    overflow: hidden;
-}
-a {
+a, legend {
     color: white;
     text-decoration: none;
 }
-.block {
-    display: block;
+
+.icons {
+    text-align: center;
+    letter-spacing: 2em;
 }
 
 #logo-bar {
@@ -31,6 +27,12 @@ a {
     height: 4em;
 }
 
+html, body, #container {
+    height: 100%;
+    padding: 0;
+    margin: 0;
+    overflow: hidden;
+}
 .scroll {
     height: calc(100% - 8em);
     overflow-x: hidden;
@@ -44,13 +46,16 @@ a {
 .small-input { /* pure-input-1-* behaves weirdly */
     width: 4em !important;
 }
-legend {
-    color: white;
-}
 
-.icons {
+#profile {
     text-align: center;
-    letter-spacing: 2em;
+}
+#profile table, #profile img {
+    margin-left: auto;
+    margin-right: auto;
+}
+#profile img {
+    max-width: 70%;
 }
 
 .conversation {
@@ -70,7 +75,6 @@ legend {
     text-align: center;
     letter-spacing: normal;
 }
-
 
 .button-error,
 .button-secondary {
