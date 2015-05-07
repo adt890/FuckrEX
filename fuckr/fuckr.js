@@ -59,6 +59,11 @@
             }
           });
         });
+      },
+      forgetCredentials: function() {
+        delete $localStorage.authenticationToken;
+        delete $localStorage.profileId;
+        return alert("token: " + $localStorage.authenticationToken);
       }
     };
   };
@@ -449,24 +454,37 @@
 
   angular.module('profilesController', ['ngRoute', 'ngStorage', 'profiles']).controller('profilesController', ['$scope', '$interval', '$localStorage', '$routeParams', 'profiles', profilesController]);
 
+  angular.module('signoutController', ['authentication']).controller('signoutController', [
+    '$scope', 'authentication', function($scope, authentication) {
+      return $scope.signout = function() {
+        if (confirm('Wanna sign out?')) {
+          authentication.forgetCredentials();
+          return setTimeout((function() {
+            return window.location.reload('/');
+          }), 500);
+        }
+      };
+    }
+  ]);
+
   updateProfileController = function($scope, $http, $rootScope, profiles, uploadImage) {
     profiles.get($rootScope.profileId).then(function(profile) {
-      alert(angular.toJson(profile));
       return $scope.profile = profile;
     });
     $scope.updateAttribute = function(attribute) {
       var data;
       data = {};
       data[attribute] = $scope.profile[attribute];
-      alert(angular.toJson(data));
-      return $http.put('https://primus.grindr.com/2.0/profile', data);
+      if (data !== {}) {
+        return $http.put('https://primus.grindr.com/2.0/profile', data);
+      }
     };
     return $scope.$watch('imageFile', function() {
       if ($scope.imageFile) {
-        return uploadImage.uploadProfileImage($scope.imageFile).then(function(imageHash) {
-          return alert(imageHash);
+        return uploadImage.uploadProfileImage($scope.imageFile).then(function() {
+          return alert("Image up for review by some Grindr™ monkey");
         }, function() {
-          return alert("failed");
+          return alert("Image upload failed");
         });
       }
     });
@@ -474,7 +492,7 @@
 
   angular.module('updateProfileController', ['file-model', 'uploadImage']).controller('updateProfileController', ['$scope', '$http', '$rootScope', 'profiles', 'uploadImage', updateProfileController]);
 
-  fuckr = angular.module('fuckr', ['ngRoute', 'profiles', 'profilesController', 'authentication', 'loginController', 'chat', 'chatController', 'updateLocation', 'updateProfileController']);
+  fuckr = angular.module('fuckr', ['ngRoute', 'profiles', 'profilesController', 'authentication', 'loginController', 'chat', 'chatController', 'updateLocation', 'updateProfileController', 'signoutController']);
 
   fuckr.config([
     '$httpProvider', '$routeProvider', function($httpProvider, $routeProvider) {

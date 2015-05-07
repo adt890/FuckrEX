@@ -37,11 +37,14 @@
           <a ng-show="authenticated" ng-href="#/chat/">
             <i class="icon-mail icon2x"></i>
           </a>
-          <a ng-hide="authenticated" ng-href="#/login">
-            <i class="icon-lock icon2x"></i>
-          </a>
           <a ng-show="authenticated" ng-href="#/updateProfile">
             <i class="icon-settings icon2x"></i>
+          </a>
+          <a ng-if="authenticated" ng-controller="signoutController" ng-click="signout()">
+            <i class="icon-signout icon2x"></i>
+          </a>
+          <a ng-hide="authenticated" ng-href="#/login">
+            <i class="icon-signin icon2x"></i>
           </a>
         </p>
       </div>

@@ -44,6 +44,10 @@ authentication = ($localStorage, $http, $rootScope, $q) ->
                         resolve()
                     else
                         reject()
+        forgetCredentials: ->
+            delete $localStorage.authenticationToken
+            delete $localStorage.profileId
+            alert("token: #{$localStorage.authenticationToken}")
     }
 
 
