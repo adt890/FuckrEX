@@ -476,13 +476,13 @@
   profilesController = function($scope, $interval, $localStorage, $routeParams, $window, profiles, pinpoint) {
     var autocomplete;
     $scope.$storage = $localStorage.$default({
-      location: 'San Francisco, CA',
+      location: null,
       grindrParams: {
         lat: 37.7833,
         lon: -122.4167,
         filter: {
-          ageMinimum: 18,
-          ageMaximum: 40,
+          ageMinimum: null,
+          ageMaximum: null,
           photoOnly: true,
           onlineOnly: false,
           page: 1,
@@ -507,6 +507,18 @@
         return $scope.refresh();
       }
     });
+    $scope.realLocation = function() {
+      alert('realLocation');
+      return navigator.geolocation.getCurrentPosition(function(position) {
+        alert(angular.toJson(position));
+        $scope.$storage.grindrParams.lat = position.coords.latitude;
+        $scope.$storage.grindrParams.lon = position.coords.longitude;
+        return $scope.$storage.location = 'real location';
+      });
+    };
+    if (!$scope.$storage.location) {
+      $scope.realLocation();
+    }
     $scope.open = function(id) {
       $scope.isNearbyProfile = parseInt($routeParams.id) !== id;
       return profiles.get(id).then(function(profile) {

@@ -40,15 +40,16 @@ html, body, #container {
 }
 
 .pure-form {
+    font-size: 0.9em;
     letter-spacing: normal;
     text-align: center;
 }
 .small-input { /* pure-input-1-* behaves weirdly */
-    width: 4em !important;
+    width: 3.5em !important;
 }
 
 #profile {
-    padding: 0 5px 5px 5px;
+    padding: 0 5px;
     text-align: center;
 }
 #profile table, #profile img {

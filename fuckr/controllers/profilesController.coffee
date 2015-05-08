@@ -1,12 +1,13 @@
 profilesController = ($scope, $interval, $localStorage, $routeParams, $window, profiles, pinpoint) ->
+    #left part: filter form and thumbnails
     $scope.$storage = $localStorage.$default
         location: 'San Francisco, CA'
         grindrParams:
             lat: 37.7833
             lon: -122.4167
             filter:
-                ageMinimum: 18
-                ageMaximum: 40
+                ageMinimum: null
+                ageMaximum: null
                 photoOnly: true
                 onlineOnly: false
                 page: 1
@@ -27,6 +28,7 @@ profilesController = ($scope, $interval, $localStorage, $routeParams, $window, p
             $scope.$storage.grindrParams.lon = place.geometry.location.lng()
             $scope.refresh()
 
+    #right part: detailed profile view
     $scope.open = (id) ->
         $scope.isNearbyProfile = parseInt($routeParams.id) != id
         profiles.get(id).then (profile) ->
