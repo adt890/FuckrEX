@@ -48,6 +48,7 @@ html, body, #container {
 }
 
 #profile {
+    padding: 0 5px 5px 5px;
     text-align: center;
 }
 #profile table, #profile img {

@@ -28,47 +28,49 @@
 </div>
 
 
-<div class="pure-u-1-2 scroll" id="profile" ng-show="profile">
-  <img class="pure-img" ng-src="http://cdns.grindr.com/images/profile/1024x1024/{{profile.profileImageMediaHash}}"/>
+<div class="pure-u-1-2 scroll">
+  <div id="profile" ng-show="profile">
+    <img class="pure-img" ng-src="http://cdns.grindr.com/images/profile/1024x1024/{{profile.profileImageMediaHash}}"/>
 
-  <h3 id="headline">{{profile.headline}}</h3>
+    <h3 id="headline">{{profile.headline}}</h3>
 
-  <p>{{profile.aboutMe}}</p>
+    <p>{{profile.aboutMe}}</p>
 
-  <p class="icons" ng-show="profile.socialNetworks">
-    <a ng-repeat="(name, info) in profile.socialNetworks" target="_blank" href="https://{{name}}.com/{{info.userId}}/">
-      <i class="icon-{{name}}"></i>
-    </a>
-  </p>
+    <p class="icons" ng-show="profile.socialNetworks">
+      <a ng-repeat="(name, info) in profile.socialNetworks" target="_blank" href="https://{{name}}.com/{{info.userId}}/">
+        <i class="icon-{{name}}"></i>
+      </a>
+    </p>
 
-  <p ng-show="profile.lookingFor && profile.lookingFor.indexOf(7) != -1" style="color: red">Looking for Right Now</p>
+    <p ng-show="profile.lookingFor && profile.lookingFor.indexOf(7) != -1" style="color: red">Looking for Right Now</p>
 
-  <table class="pure-table">
-    <thead>
-      <tr>
-        <th>Age</th>
-        <th>Height (m)</th>
-        <th>Weight (kg)</th>
-      </tr>
-    </thead>
-    <tbody>
-      <tr>
-        <td>{{profile.age}}</td>
-        <td>{{(profile.height / 100) || ''}}</td>
-        <td>{{(profile.weight / 1000) || ''}}</td>
-      </tr>
-    </tbody>
-  </table>
+    <table class="pure-table">
+      <thead>
+        <tr>
+          <th>Age</th>
+          <th>Height (m)</th>
+          <th>Weight (kg)</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>{{profile.age}}</td>
+          <td>{{(profile.height / 100) || ''}}</td>
+          <td>{{(profile.weight / 1000) || ''}}</td>
+        </tr>
+      </tbody>
+    </table>
 
-  <p ng-show="profile.distance">
-    <b> {{profile.distance.toPrecision(3)}} km away</b>
-    <i ng-show="isNearbyProfile && (!pinpointing)" class="icon-globe icon2x" ng-click="pinpoint(profile.profileId)"></i>
-    <img ng-show="pinpointing" src="img/spin.gif">
-  </p>
+    <p ng-show="profile.distance">
+      <b> {{profile.distance.toPrecision(3)}} km away</b>
+      <i ng-show="isNearbyProfile && (!pinpointing)" class="icon-globe icon2x" ng-click="pinpoint(profile.profileId)"></i>
+      <img ng-show="pinpointing" src="img/spin.gif">
+    </p>
 
-  <p ng-show="authenticated" class="icons">
-    <a ng-href="#/chat/{{profile.profileId}}">
-      <i class="icon-discussion icon3x"></i>
-    </a>
-  </p>
+    <p ng-show="authenticated" class="icons">
+      <a ng-href="#/chat/{{profile.profileId}}">
+        <i class="icon-discussion icon3x"></i>
+      </a>
+    </p>
+  </div>
 </div>
