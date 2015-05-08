@@ -1,0 +1,94 @@
+@import url("http://netdna.bootstrapcdn.com/font-awesome/4.1.0/css/font-awesome.css");
+@import url("https://fonts.googleapis.com/css?family=Raleway");
+@import url("https://fonts.googleapis.com/css?family=Merriweather");
+
+@-webkit-viewport { width: device-width; }
+@-moz-viewport { width: device-width; }
+@-o-viewport { width: device-width; }
+@-ms-viewport { width: device-width; }
+@viewport { width: device-width; }
+
+html {
+	color: #444;
+	font-family: "Merriweather", sans-serif;
+	font-size: 11pt;
+	background: #ffffff;
+	background: -moz-linear-gradient(bottom, #f3f3f3 0%, #ffffff 60%, #e1e1e1 100%);
+	background: -webkit-gradient(left bottom, left top, color-stop(0%, #e1e1e1), color-stop(60%, #ffffff), color-stop(100%, #ffe7d8));
+	background: -webkit-linear-gradient(bottom, #f3f3f3 0%, #ffffff 60%, #e1e1e1 100%);
+	background: -o-linear-gradient(bottom, #f3f3f3 0%, #ffffff 60%, #e1e1e1 100%);
+	background: -ms-linear-gradient(bottom, #f3f3f3 0%, #ffffff 60%, #e1e1e1 100%);
+	background: linear-gradient(to top, #f3f3f3 0%, #ffffff 60%, #e1e1e1 100%);
+	filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#f3f3f3', endColorstr='#e1e1e1', GradientType=0 );
+}
+
+h1, h2, h3 {
+	font-family: "Raleway", sans-serif;
+	font-weight: bold;
+}
+
+h1 {
+	font-size: 30pt;
+	margin-top: 10pt;
+}
+
+.container {
+	max-width: 900px;
+	margin: 0 auto;
+	padding: 30px;
+	background: rgba(255,255,255,0.4);
+}
+
+#intro {
+	text-align: center;
+	margin-top: 20pt;
+}
+
+#intro p {
+	margin: 30pt auto 10pt auto;
+	max-width: 600px;
+	line-height: 140%;
+}
+
+#screenshot {
+	width: 100%;
+	margin: 40pt 0 20pt 0;
+}
+
+a.button {
+	display: inline-block;
+	margin: 10px;
+	width: 260px;
+	background: #ff816d;
+	color: white;
+	font-family: "Raleway", sans-serif;
+	padding:  18px;
+	font-size: 13pt;
+	font-weight: bold;
+	-webkit-border-radius: 7px;
+	-moz-border-radius: 7px;
+	border-radius: 7px;
+}
+
+a.button:hover {
+	background: #f05c44;
+}
+
+footer {
+	margin-bottom: 30pt;
+}
+
+footer ul li {
+	display: inline-block;
+	float: left;
+	padding: 20px;
+	color: #aaa;
+}
+
+footer ul li a {
+	color: #aaa;
+}
+
+footer ul li a:hover {
+	color: #666;
+}
