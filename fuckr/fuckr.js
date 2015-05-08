@@ -290,7 +290,6 @@
           }
           beacons[i].dist = profile.distance;
         }
-        alert(angular.toJson(beacons));
         return deferred.resolve(trilaterate(beacons));
       });
       return deferred.promise;
@@ -327,12 +326,9 @@
         });
         return deferred.promise;
       },
-      get: function(id, lookUpCache) {
+      get: function(id) {
         var deferred;
-        if (lookUpCache == null) {
-          lookUpCache = true;
-        }
-        if (lookUpCache && profileCache[id]) {
+        if (profileCache[id]) {
           return $q.when(profileCache[id]);
         } else {
           deferred = $q.defer();

@@ -18,8 +18,8 @@ profiles = ($http, $q, $rootScope) ->
                 deferred.resolve(profiles)
             deferred.promise
 
-        get: (id, lookUpCache=true) ->
-            if lookUpCache and profileCache[id]
+        get: (id) ->
+            if profileCache[id]
                 $q.when(profileCache[id])
             else
                 deferred = $q.defer()
