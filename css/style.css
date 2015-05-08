@@ -10,8 +10,8 @@
 
 html {
 	color: #444;
-	font-family: "Merriweather", sans-serif;
-	font-size: 11pt;
+	font-family: "Lucida Sans Unicode", "Lucida Grande", sans-serif;
+	font-size: 13pt;
 	background: #ffffff;
 	background: -moz-linear-gradient(bottom, #f3f3f3 0%, #ffffff 60%, #e1e1e1 100%);
 	background: -webkit-gradient(left bottom, left top, color-stop(0%, #e1e1e1), color-stop(60%, #ffffff), color-stop(100%, #ffe7d8));
