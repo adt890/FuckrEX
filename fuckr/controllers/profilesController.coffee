@@ -11,10 +11,11 @@ profilesController = ($scope, $interval, $localStorage, $routeParams, $window, p
                 photoOnly: true
                 onlineOnly: false
                 page: 1
-                quantity: 150
+                quantity: 300
 
     $scope.refresh = ->
         profiles.nearby($scope.$storage.grindrParams).then (profiles) ->
+            alert(profiles.length)
             $scope.nearbyProfiles = profiles
 
     $scope.refresh()
