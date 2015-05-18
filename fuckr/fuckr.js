@@ -434,8 +434,12 @@
     };
     $scope.$watch('imageFile', function() {
       if ($scope.imageFile) {
+        $scope.uploading = true;
         return uploadImage.uploadChatImage($scope.imageFile).then(function(imageHash) {
-          return chat.sentImages.push(imageHash);
+          $scope.uploading = false;
+          if (imageHash) {
+            return chat.sentImages.push(imageHash);
+          }
         });
       }
     });
@@ -476,7 +480,7 @@
   profilesController = function($scope, $interval, $localStorage, $routeParams, $window, profiles, pinpoint) {
     var autocomplete;
     $scope.$storage = $localStorage.$default({
-      location: null,
+      location: 'San Francisco, CA',
       grindrParams: {
         lat: 37.7833,
         lon: -122.4167,
@@ -486,7 +490,7 @@
           photoOnly: true,
           onlineOnly: false,
           page: 1,
-          quantity: 150
+          quantity: 300
         }
       }
     });
@@ -507,18 +511,6 @@
         return $scope.refresh();
       }
     });
-    $scope.realLocation = function() {
-      alert('realLocation');
-      return navigator.geolocation.getCurrentPosition(function(position) {
-        alert(angular.toJson(position));
-        $scope.$storage.grindrParams.lat = position.coords.latitude;
-        $scope.$storage.grindrParams.lon = position.coords.longitude;
-        return $scope.$storage.location = 'real location';
-      });
-    };
-    if (!$scope.$storage.location) {
-      $scope.realLocation();
-    }
     $scope.open = function(id) {
       $scope.isNearbyProfile = parseInt($routeParams.id) !== id;
       return profiles.get(id).then(function(profile) {
@@ -570,10 +562,13 @@
     };
     return $scope.$watch('imageFile', function() {
       if ($scope.imageFile) {
+        $scope.uploading = true;
         return uploadImage.uploadProfileImage($scope.imageFile).then(function() {
           return alert("Image up for review by some Grindr™ monkey");
         }, function() {
           return alert("Image upload failed");
+        })["finally"](function() {
+          return $scope.uploading = false;
         });
       }
     });

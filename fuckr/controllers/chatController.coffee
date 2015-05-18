@@ -21,8 +21,10 @@ chatController = ($scope, $routeParams, chat, uploadImage) ->
     
     $scope.$watch 'imageFile', ->
         if $scope.imageFile
+            $scope.uploading = true
             uploadImage.uploadChatImage($scope.imageFile).then (imageHash) ->
-                chat.sentImages.push(imageHash)
+                $scope.uploading = false
+                chat.sentImages.push(imageHash) if imageHash
 
     $scope.sendImage = (imageHash) ->
         chat.sendImage(imageHash, $scope.conversationId)

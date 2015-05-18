@@ -30,7 +30,8 @@
 
       <legend>New profile image</legend>
       <p>Please upload a square image. If your image isn't a square, the thumbnail will be the biggest square from the upper right-left corner</p>
-      <input type="file" accept="image/jpg,image/jpeg" file-model="imageFile" class="pure-input-1">
+      <input ng-hide="uploading" type="file" accept="image/jpg,image/jpeg" file-model="imageFile" class="pure-input-1">
+      <img ng-show="uploading" src="img/spin.gif">
     </fieldset>
   </form>
 </div>
