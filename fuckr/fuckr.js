@@ -462,12 +462,13 @@
 
   loginController = function($scope, $location, authentication) {
     $scope.login = function() {
+      $scope.logging = true;
       return authentication.login($scope.email, $scope.password).then(function() {
         return authentication.authenticate().then(function() {
           return $location.path('/profiles/');
         });
       }, function() {
-        return $scope.email = $scope.password = '';
+        return $scope.logging = $scope.email = $scope.password = null;
       });
     };
     return $scope.tip = function() {
@@ -551,15 +552,12 @@
   updateProfileController = function($scope, $http, $rootScope, profiles, uploadImage) {
     $scope.profile = {};
     profiles.get($rootScope.profileId).then(function(profile) {
-      alert(angular.toJson(profile));
       return $scope.profile = profile;
     });
     $scope.updateAttribute = function(attribute) {
       var data;
       data = {};
-      alert("updateAttribute(" + attribute + ")");
       data[attribute] = $scope.profile[attribute];
-      alert(angular.toJson(data));
       if (data !== {}) {
         return $http.put('https://primus.grindr.com/2.0/profile', data);
       }

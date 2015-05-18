@@ -11,8 +11,9 @@
       <label for="password">Password</label>
       <input class="pure-input-1" ng-model="password" id="password" type="password" placeholder="Password">
 
-      <button ng-click="login()" type="submit" class="pure-button pure-button-primary">Sign in</button>
-      <a ng-click="tip()" class="pure-button" href="https://account.grindr.com/signup?locale=en" target="_blank">Sign up</a>
+      <button ng-hide="logging" ng-click="login()" type="submit" class="pure-button pure-button-primary">Sign in</button>
+      <a ng-hide="logging" ng-click="tip()" class="pure-button button-secondary" href="https://account.grindr.com/signup?locale=en" target="_blank">Sign up</a>
+      <img ng-show="logging" src="img/spin.gif">
     </fieldset>
   </form>
 </div>
