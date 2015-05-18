@@ -2,7 +2,7 @@ var NwBuilder = require('node-webkit-builder');
 var nw = new NwBuilder({
   files: 'fuckr/**',
   platforms: ['osx64'],
-  version: '0.9.2',
+  version: '0.12.1',
   appName: 'Fuckr',
   appVersion: '1.0.1',
   winIco: 'icons/win.ico',

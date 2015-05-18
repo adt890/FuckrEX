@@ -14,12 +14,15 @@
     };
     $localStorage.deviceAuthentifier = $localStorage.deviceAuthentifier || uuid();
     $rootScope.profileId = $localStorage.profileId;
-    window.logoutAndRestart = function(askForConfirmation) {
-      if (!(askForConfirmation && !confirm('Wanna log out?'))) {
-        localStorage.removeItem('ngStorage-authenticationToken');
-        return window.location.reload('/');
-      }
+    $rootScope.logoutAndRestart = function() {
+      localStorage.removeItem('ngStorage-authenticationToken');
+      return window.location.reload('/');
     };
+    if (window.chrome && chrome.webRequest) {
+      chrome.webRequest.onAuthRequired.addListener($rootScope.logoutAndRestart, {
+        urls: ["<all_urls>"]
+      });
+    }
     return {
       authenticate: function() {
         return $q(function(resolve, reject) {
@@ -484,16 +487,6 @@
 
   angular.module('loginController', ['ngStorage', 'authentication']).controller('loginController', ['$scope', '$location', '$localStorage', 'authentication', loginController]);
 
-  angular.module('logoutController', ['authentication']).controller('logoutController', [
-    '$scope', 'authentication', function($scope, authentication) {
-      return $scope.logout = function() {
-        if (confirm('Wanna log out?')) {
-          return authentication.logout();
-        }
-      };
-    }
-  ]);
-
   profilesController = function($scope, $interval, $localStorage, $routeParams, $window, profiles, pinpoint) {
     var autocomplete;
     $scope.$storage = $localStorage.$default({
@@ -581,23 +574,12 @@
 
   angular.module('updateProfileController', ['file-model', 'uploadImage']).controller('updateProfileController', ['$scope', '$http', '$rootScope', 'profiles', 'uploadImage', updateProfileController]);
 
-  fuckr = angular.module('fuckr', ['ngRoute', 'profiles', 'profilesController', 'authentication', 'loginController', 'chat', 'chatController', 'updateLocation', 'updateProfileController', 'logoutController']);
+  fuckr = angular.module('fuckr', ['ngRoute', 'profiles', 'profilesController', 'authentication', 'loginController', 'chat', 'chatController', 'updateLocation', 'updateProfileController']);
 
   fuckr.config([
     '$httpProvider', '$routeProvider', function($httpProvider, $routeProvider) {
       var name, route, _i, _len, _ref, _results;
       $httpProvider.defaults.headers.common.Accept = '*/*';
-      $httpProvider.interceptors.push(function() {
-        return {
-          responseError: function(response) {
-            if (response.status === 401) {
-              return window.logoutAndRestart(false);
-            } else {
-              return response;
-            }
-          }
-        };
-      });
       _ref = ['/profiles/:id?', '/chat/:id?', '/login', '/updateProfile'];
       _results = [];
       for (_i = 0, _len = _ref.length; _i < _len; _i++) {

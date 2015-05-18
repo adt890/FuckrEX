@@ -8,14 +8,13 @@ authentication = ($localStorage, $http, $rootScope, $q) ->
     $localStorage.deviceAuthentifier = $localStorage.deviceAuthentifier || uuid()
     $rootScope.profileId = $localStorage.profileId
 
-    #Global variable in order to:
-    #   - be accessible from fuckr.config and 401 error interceptor
-    #   - avoid a controller just for signout
-    window.logoutAndRestart = (askForConfirmation) ->
-        unless askForConfirmation and not confirm('Wanna log out?')
-            #bypassing ngStorage to delete key immediately
-            localStorage.removeItem('ngStorage-authenticationToken')
-            window.location.reload('/')
+    $rootScope.logoutAndRestart = ->
+        #bypassing ngStorage to delete key immediately
+        localStorage.removeItem('ngStorage-authenticationToken')
+        window.location.reload('/')
+    #simply hooking 401's doesn't work, you have to disable authentication in some way
+    if window.chrome and chrome.webRequest #requires node-webkit 0.12.0+
+        chrome.webRequest.onAuthRequired.addListener($rootScope.logoutAndRestart, urls: ["<all_urls>"])
 
     return {
         authenticate: ->

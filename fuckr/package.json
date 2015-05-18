@@ -4,7 +4,7 @@
   "main": "index.html",
   "window": {
     "title": "Fuckr",
-    "toolbar": false,
+    "toolbar": true,
     "resizable": true,
     "position": "center",
     "width": 1024,
@@ -14,7 +14,6 @@
     "page-cache": true
   },
   "user-agent": "Dalvik/1.6.0 (Linux; U; Android 4.4.2; 7040T Build/KVT49L)",
-  "chromium-args": "--auth-schemes=''",
   "no-edit-menu": false,
   "dependencies": {
     "request": "*",

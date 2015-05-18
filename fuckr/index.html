@@ -41,7 +41,7 @@
           <a ng-show="authenticated" ng-href="#/updateProfile">
             <i class="icon-settings icon2x"></i>
           </a>
-          <a ng-if="authenticated" onClick="window.logoutAndRestart(true)">
+          <a ng-if="authenticated" ng-click="logoutAndRestart()">
             <i class="icon-signout icon2x"></i>
           </a>
           <a ng-hide="authenticated" ng-href="#/login">
