@@ -1,4 +1,5 @@
 updateProfileController = ($scope, $http, $rootScope, profiles, uploadImage) ->
+    $scope.profile = {}
     profiles.get($rootScope.profileId).then (profile) ->
         $scope.profile = profile
 
