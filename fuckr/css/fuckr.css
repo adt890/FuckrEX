@@ -6,6 +6,9 @@ a, legend {
     color: white !important;
     text-decoration: none;
 }
+aside {
+    margin: 1.5em 0;
+}
 
 .icons {
     text-align: center;
