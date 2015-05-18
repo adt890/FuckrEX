@@ -14,9 +14,18 @@
     };
     $localStorage.deviceAuthentifier = $localStorage.deviceAuthentifier || uuid();
     $rootScope.profileId = $localStorage.profileId;
+    window.logoutAndRestart = function(askForConfirmation) {
+      if (!(askForConfirmation && !confirm('Wanna log out?'))) {
+        localStorage.removeItem('ngStorage-authenticationToken');
+        return window.location.reload('/');
+      }
+    };
     return {
       authenticate: function() {
         return $q(function(resolve, reject) {
+          if (!$localStorage.authenticationToken) {
+            return reject('no authentication token');
+          }
           return $http.post('https://primus.grindr.com/2.0/session', {
             appName: "Grindr",
             appVersion: "2.2.3",
@@ -59,11 +68,6 @@
             }
           });
         });
-      },
-      forgetCredentials: function() {
-        delete $localStorage.authenticationToken;
-        delete $localStorage.profileId;
-        return alert("token: " + $localStorage.authenticationToken);
       }
     };
   };
@@ -180,7 +184,8 @@
       });
       return xmpp.on('error', function(message) {
         $rootScope.chatError = true;
-        return alert("chat error: " + message);
+        xmpp.disconnect();
+        return alert("chat error: " + message + ". If you're using public wifi, XMPP protocol is probably blocked.");
       });
     });
     sendMessage = function(type, body, to) {
@@ -460,15 +465,16 @@
 
   angular.module('chatController', ['ngRoute', 'file-model', 'chat', 'uploadImage']).controller('chatController', ['$scope', '$routeParams', 'chat', 'uploadImage', chatController]);
 
-  loginController = function($scope, $location, authentication) {
+  loginController = function($scope, $location, $localStorage, authentication) {
+    $scope.$storage = $localStorage;
     $scope.login = function() {
       $scope.logging = true;
-      return authentication.login($scope.email, $scope.password).then(function() {
+      return authentication.login($scope.$storage.email, $scope.$storage.password).then(function() {
         return authentication.authenticate().then(function() {
           return $location.path('/profiles/');
         });
       }, function() {
-        return $scope.logging = $scope.email = $scope.password = null;
+        return $scope.logging = $scope.$storage.email = $scope.$storage.password = null;
       });
     };
     return $scope.tip = function() {
@@ -476,7 +482,17 @@
     };
   };
 
-  angular.module('loginController', ['authentication']).controller('loginController', ['$scope', '$location', 'authentication', loginController]);
+  angular.module('loginController', ['ngStorage', 'authentication']).controller('loginController', ['$scope', '$location', '$localStorage', 'authentication', loginController]);
+
+  angular.module('logoutController', ['authentication']).controller('logoutController', [
+    '$scope', 'authentication', function($scope, authentication) {
+      return $scope.logout = function() {
+        if (confirm('Wanna log out?')) {
+          return authentication.logout();
+        }
+      };
+    }
+  ]);
 
   profilesController = function($scope, $interval, $localStorage, $routeParams, $window, profiles, pinpoint) {
     var autocomplete;
@@ -536,19 +552,6 @@
 
   angular.module('profilesController', ['ngRoute', 'ngStorage', 'profiles', 'pinpoint']).controller('profilesController', ['$scope', '$interval', '$localStorage', '$routeParams', '$window', 'profiles', 'pinpoint', profilesController]);
 
-  angular.module('signoutController', ['authentication']).controller('signoutController', [
-    '$scope', 'authentication', function($scope, authentication) {
-      return $scope.signout = function() {
-        if (confirm('Wanna sign out?')) {
-          authentication.forgetCredentials();
-          return setTimeout((function() {
-            return window.location.reload('/');
-          }), 500);
-        }
-      };
-    }
-  ]);
-
   updateProfileController = function($scope, $http, $rootScope, profiles, uploadImage) {
     $scope.profile = {};
     profiles.get($rootScope.profileId).then(function(profile) {
@@ -578,12 +581,23 @@
 
   angular.module('updateProfileController', ['file-model', 'uploadImage']).controller('updateProfileController', ['$scope', '$http', '$rootScope', 'profiles', 'uploadImage', updateProfileController]);
 
-  fuckr = angular.module('fuckr', ['ngRoute', 'profiles', 'profilesController', 'authentication', 'loginController', 'chat', 'chatController', 'updateLocation', 'updateProfileController', 'signoutController']);
+  fuckr = angular.module('fuckr', ['ngRoute', 'profiles', 'profilesController', 'authentication', 'loginController', 'chat', 'chatController', 'updateLocation', 'updateProfileController', 'logoutController']);
 
   fuckr.config([
     '$httpProvider', '$routeProvider', function($httpProvider, $routeProvider) {
       var name, route, _i, _len, _ref, _results;
       $httpProvider.defaults.headers.common.Accept = '*/*';
+      $httpProvider.interceptors.push(function() {
+        return {
+          responseError: function(response) {
+            if (response.status === 401) {
+              return window.logoutAndRestart(false);
+            } else {
+              return response;
+            }
+          }
+        };
+      });
       _ref = ['/profiles/:id?', '/chat/:id?', '/login', '/updateProfile'];
       _results = [];
       for (_i = 0, _len = _ref.length; _i < _len; _i++) {

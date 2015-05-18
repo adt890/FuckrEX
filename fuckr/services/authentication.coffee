@@ -8,9 +8,19 @@ authentication = ($localStorage, $http, $rootScope, $q) ->
     $localStorage.deviceAuthentifier = $localStorage.deviceAuthentifier || uuid()
     $rootScope.profileId = $localStorage.profileId
 
+    #Global variable in order to:
+    #   - be accessible from fuckr.config and 401 error interceptor
+    #   - avoid a controller just for signout
+    window.logoutAndRestart = (askForConfirmation) ->
+        unless askForConfirmation and not confirm('Wanna log out?')
+            #bypassing ngStorage to delete key immediately
+            localStorage.removeItem('ngStorage-authenticationToken')
+            window.location.reload('/')
+
     return {
         authenticate: ->
             $q (resolve, reject) ->
+                return reject('no authentication token') unless $localStorage.authenticationToken
                 $http.post 'https://primus.grindr.com/2.0/session',
                     appName: "Grindr"
                     appVersion: "2.2.3"
@@ -44,10 +54,7 @@ authentication = ($localStorage, $http, $rootScope, $q) ->
                         resolve()
                     else
                         reject()
-        forgetCredentials: ->
-            delete $localStorage.authenticationToken
-            delete $localStorage.profileId
-            alert("token: #{$localStorage.authenticationToken}")
+
     }
 
 

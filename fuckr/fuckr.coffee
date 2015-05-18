@@ -10,12 +10,19 @@ fuckr = angular.module 'fuckr', [
     'chatController'
     'updateLocation'
     'updateProfileController'
-    'signoutController'
 ]
 
 
 fuckr.config ['$httpProvider', '$routeProvider', ($httpProvider, $routeProvider) ->
     $httpProvider.defaults.headers.common.Accept = '*/*' #avoids 406 error
+
+    #unfortunately requires HTTP basic auth to be disabled
+    $httpProvider.interceptors.push ->
+        responseError: (response) ->
+            if response.status == 401
+                window.logoutAndRestart(false)
+            else
+                return response
 
     for route in ['/profiles/:id?', '/chat/:id?', '/login', '/updateProfile']
         name = route.split('/')[1]

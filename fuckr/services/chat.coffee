@@ -76,7 +76,8 @@ chat = ($http, $localStorage, $rootScope, $q, profiles) ->
 
         xmpp.on 'error', (message) ->
             $rootScope.chatError = true
-            alert("chat error: #{message}")
+            xmpp.disconnect()
+            alert("chat error: #{message}. If you're using public wifi, XMPP protocol is probably blocked.")
 
 
     sendMessage = (type, body, to) ->

@@ -6,12 +6,12 @@
       <legend>Grindr Authentication</legend>
 
       <label for="email">Email</label>
-      <input class="pure-input-1" ng-model="email" id="email" type="email" placeholder="Email">
+      <input class="pure-input-1" ng-model="$storage.email" id="email" type="email" placeholder="Email">
 
       <label for="password">Password</label>
-      <input class="pure-input-1" ng-model="password" id="password" type="password" placeholder="Password">
+      <input class="pure-input-1" ng-model="$storage.password" id="password" type="password" placeholder="Password">
 
-      <button ng-hide="logging" ng-click="login()" type="submit" class="pure-button pure-button-primary">Sign in</button>
+      <button ng-hide="logging" ng-click="login()" type="submit" class="pure-button pure-button-primary">Log in</button>
       <a ng-hide="logging" ng-click="tip()" class="pure-button button-secondary" href="https://account.grindr.com/signup?locale=en" target="_blank">Sign up</a>
       <img ng-show="logging" src="img/spin.gif">
     </fieldset>
