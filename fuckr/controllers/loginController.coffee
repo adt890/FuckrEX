@@ -2,9 +2,11 @@ loginController = ($scope, $location, $localStorage, authentication) ->
     $scope.$storage = $localStorage
     $scope.login = ->
         $scope.logging = true
+        success = -> $location.path('/profiles/')
+        failure = -> $scope.logging = $scope.$storage.email = $scope.$storage.password = null
         authentication.login($scope.$storage.email, $scope.$storage.password).then(
-            -> authentication.authenticate().then -> $location.path('/profiles/')
-            -> $scope.logging = $scope.$storage.email = $scope.$storage.password = null
+            -> authentication.authenticate().then(success, -> alert('You might have been blocked'); failure())
+            failure
         )
     $scope.tip = ->
         alert("Please sign up using popup window and close it when the 'Create Account' button fades.")

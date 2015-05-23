@@ -29,6 +29,7 @@
           if (!$localStorage.authenticationToken) {
             return reject('no authentication token');
           }
+          console.log('authenticate()');
           return $http.post('https://primus.grindr.com/2.0/session', {
             appName: "Grindr",
             appVersion: "2.2.3",
@@ -42,6 +43,7 @@
             return reject('wrong token or no connection');
           }).success(function(data, status, headers, config) {
             var sessionId;
+            console.log(angular.toJson(data));
             sessionId = headers()['session-id'];
             $http.defaults.headers.common['Session-Id'] = sessionId;
             $http.defaults.headers.common['Cookies'] = "Session-Id=" + sessionId;
@@ -61,10 +63,12 @@
           });
           return req.on('response', function(response) {
             var redirection_link;
+            console.log(angular.toJson(response));
             redirection_link = response.headers.location;
             if (redirection_link) {
               $localStorage.authenticationToken = redirection_link.split('authenticationToken=')[1].split('&')[0];
               $rootScope.profileId = $localStorage.profileId = parseInt(redirection_link.split('profileId=')[1]);
+              console.log('gonna resolve');
               return resolve();
             } else {
               return reject();
@@ -471,14 +475,20 @@
   loginController = function($scope, $location, $localStorage, authentication) {
     $scope.$storage = $localStorage;
     $scope.login = function() {
+      var failure, success;
       $scope.logging = true;
-      return authentication.login($scope.$storage.email, $scope.$storage.password).then(function() {
-        return authentication.authenticate().then(function() {
-          return $location.path('/profiles/');
-        });
-      }, function() {
+      success = function() {
+        return $location.path('/profiles/');
+      };
+      failure = function() {
         return $scope.logging = $scope.$storage.email = $scope.$storage.password = null;
-      });
+      };
+      return authentication.login($scope.$storage.email, $scope.$storage.password).then(function() {
+        return authentication.authenticate().then(success, function() {
+          alert('You might have been blocked');
+          return failure();
+        });
+      }, failure);
     };
     return $scope.tip = function() {
       return alert("Please sign up using popup window and close it when the 'Create Account' button fades.");
