@@ -481,7 +481,7 @@
       };
       return authentication.login($scope.$storage.email, $scope.$storage.password).then(function() {
         return authentication.authenticate().then(success, function() {
-          alert('You might have been blocked');
+          alert('This account may have been banned');
           return failure();
         });
       }, failure);

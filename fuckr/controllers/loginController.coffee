@@ -5,7 +5,7 @@ loginController = ($scope, $location, $localStorage, authentication) ->
         success = -> $location.path('/profiles/')
         failure = -> $scope.logging = $scope.$storage.email = $scope.$storage.password = null
         authentication.login($scope.$storage.email, $scope.$storage.password).then(
-            -> authentication.authenticate().then(success, -> alert('You might have been blocked'); failure())
+            -> authentication.authenticate().then(success, -> alert('This account may have been banned'); failure())
             failure
         )
     $scope.tip = ->
