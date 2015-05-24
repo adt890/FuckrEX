@@ -1,4 +1,4 @@
-#fuckr: Grindr™ for Mac and Windows
+#[fuckr](http://fuckr.me/): Grindr™ for [Mac](http://fuckr.me/downloads/Fuckr.dmg) and [Windows](http://fuckr.me/downloads/Fuckr.dmg)
 
 fuckr is a Grindr™ client for desktop built with Node Webkit, node-xmpp and Angular.
 
