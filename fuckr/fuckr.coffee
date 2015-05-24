@@ -1,3 +1,10 @@
+#necessary to use smileys or copy and paste on Mac...
+if typeof process != 'undefined' and process.platform == 'darwin'
+    gui = require('nw.gui')
+    nativeMenuBar = new gui.Menu({ type: "menubar" })
+    nativeMenuBar.createMacBuiltin "Fuckr"
+    gui.Window.get().menu = nativeMenuBar
+
 fuckr = angular.module 'fuckr', [
     #works on any browser with SOP disabled
     'ngRoute'
