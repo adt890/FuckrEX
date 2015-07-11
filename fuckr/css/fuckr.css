@@ -30,6 +30,12 @@ aside {
     height: 4em;
 }
 
+iframe {
+    height: 450px !important;
+    margin-top: 4em;
+    border: none;
+}
+
 html, body, #container {
     height: 100%;
     padding: 0;

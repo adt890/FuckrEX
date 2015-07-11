@@ -11,8 +11,7 @@ fuckr = angular.module 'fuckr', [
     'profiles'
     'profilesController'
     #requires node-webkit
-    'authentication'
-    'loginController'
+    'authenticate'
     'chat'
     'chatController'
     'updateLocation'
@@ -23,7 +22,9 @@ fuckr = angular.module 'fuckr', [
 fuckr.config ['$httpProvider', '$routeProvider', ($httpProvider, $routeProvider) ->
     $httpProvider.defaults.headers.common.Accept = '*/*' #avoids 406 error
 
-    for route in ['/profiles/:id?', '/chat/:id?', '/login', '/updateProfile']
+    #login form and controller have been replaced by an iFrame and a webRequest interceptor (see authenticate factory)
+    $routeProvider.when('/login', templateUrl: 'views/login.html')
+    for route in ['/profiles/:id?', '/chat/:id?', '/updateProfile']
         name = route.split('/')[1]
         $routeProvider.when route,
             templateUrl: "views/#{name}.html"
@@ -31,10 +32,10 @@ fuckr.config ['$httpProvider', '$routeProvider', ($httpProvider, $routeProvider)
 ]
 
 
-fuckr.run ['$location', '$injector', 'authentication', ($location, $injector, authentication) ->
+fuckr.run ['$location', '$injector', 'authenticate', ($location, $injector, authenticate) ->
     #ugly: loading every factory with 'authenticated' event listener
     $injector.get(factory) for factory in ['profiles', 'chat', 'updateLocation']
-    authentication.authenticate().then(
+    authenticate().then(
         -> $location.path('/profiles/')
         -> $location.path('/login')
     )

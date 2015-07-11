@@ -1,6 +1,12 @@
 xmpp = require('simple-xmpp')
 
-
+#Grindr chat messages are JSON objects sent and received with XMPP:
+#   addresses: "{profileId}@chat.grindr.com"
+#   password: one-time token (see authentication)
+#Grindr chat uses HTTP to:
+#   - get messages sent while you were offline (/undeliveredChatMessages)
+#   - confirm receiption (/confirmChatMessagesDelivered)
+#   - notify Grindr you blocked someone (managed by profiles controller)
 chat = ($http, $localStorage, $rootScope, $q, profiles) ->
     s4 = -> Math.floor((1 + Math.random()) * 0x10000).toString(16).substring(1)
     uuid = -> "#{s4()}#{s4()}-#{s4()}-#{s4()}-#{s4()}-#{s4()}#{s4()}#{s4()}".toUpperCase()
@@ -80,7 +86,7 @@ chat = ($http, $localStorage, $rootScope, $q, profiles) ->
             alert("chat error: #{message}. If you're using public wifi, XMPP protocol is probably blocked.")
 
 
-    sendMessage = (type, body, to) ->
+    sendMessage = (type, body, to, save=true) ->
         message =
             targetProfileId: String(to)
             type: type
@@ -90,11 +96,11 @@ chat = ($http, $localStorage, $rootScope, $q, profiles) ->
             sourceProfileId: String($localStorage.profileId)
             body: body
         xmpp.send("#{to}@chat.grindr.com", angular.toJson(message))
-        addMessage(message)
+        addMessage(message) if save
 
     return {
-        sendText: (text, to) ->
-            sendMessage('text', text, to)
+        sendText: (text, to, save=true) ->
+            sendMessage('text', text, to, save)
 
         getConversation: (id) ->
             $localStorage.conversations[id]

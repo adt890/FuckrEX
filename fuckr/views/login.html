@@ -1,24 +1,9 @@
 <div class="pure-u-1-3"></div>
 
 <div class="pure-u-1-3">
-  <aside>
-    <p>Warning: Grindr won't let you use the same account on two different devices <b>at the same time</b>.</p>
-  </aside>
-  <form id="login" class="pure-form pure-form-stacked">
-    <fieldset>
-      <legend>Grindr Authentication</legend>
-
-      <label for="email">Email</label>
-      <input class="pure-input-1" ng-model="$storage.email" id="email" type="email" placeholder="Email">
-
-      <label for="password">Password</label>
-      <input class="pure-input-1" ng-model="$storage.password" id="password" type="password" placeholder="Password">
-
-      <button ng-hide="logging" ng-click="login()" type="submit" class="pure-button pure-button-primary">Log in</button>
-      <a ng-hide="logging" ng-click="tip()" class="pure-button button-secondary" href="https://account.grindr.com/signup?locale=en" target="_blank">Sign up</a>
-      <img ng-show="logging" src="img/spin.gif">
-    </fieldset>
-  </form>
+  <!-- Sadly, account.grindr.com's SSL certificate is self-signed
+       so we have to either use HTTP oradd ignore-certificate-errors chrome flag -->
+  <iframe src="https://account.grindr.com/login">
 </div>
 
 <div class="pure-u-1-3"></div>

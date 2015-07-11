@@ -1,3 +1,4 @@
+#gets, caches and blocks profiles
 profiles = ($http, $q, $rootScope) ->
     profileCache = {}
 
