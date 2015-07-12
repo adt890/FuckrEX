@@ -14,21 +14,23 @@
     $rootScope.profileId = $localStorage.profileId;
     onSuccessfulLogin = function(response) {
       var redirection_link;
-      console.debug(response);
       redirection_link = _.findWhere(response.responseHeaders, {
         name: "Location"
       }).value;
       $localStorage.authenticationToken = redirection_link.split('authenticationToken=')[1].split('&')[0];
       $rootScope.profileId = $localStorage.profileId = parseInt(redirection_link.split('profileId=')[1]);
-      return authenticateFunction().then(function() {
+      authenticateFunction().then(function() {
         return $location.path('/profiles');
       }, function() {
         return alert('Your account is probably banned');
       });
+      return {
+        cancel: true
+      };
     };
     chrome.webRequest.onHeadersReceived.addListener(onSuccessfulLogin, {
-      urls: ["https://account.grindr.com/sessions?locale=en"]
-    }, ["responseHeaders"]);
+      urls: ['https://account.grindr.com/sessions?locale=en', 'https://account.grindr.com/users?locale=en']
+    }, ['responseHeaders', 'blocking']);
     authenticateFunction = function() {
       return $q(function(resolve, reject) {
         if (!$localStorage.authenticationToken) {
@@ -495,6 +497,7 @@
     google.maps.event.addListener(autocomplete, 'place_changed', function() {
       var place;
       place = autocomplete.getPlace();
+      $scope.$storage.location = place.formatted_address;
       if (place.geometry) {
         $scope.$storage.grindrParams.lat = place.geometry.location.lat();
         $scope.$storage.grindrParams.lon = place.geometry.location.lng();

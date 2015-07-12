@@ -18,7 +18,6 @@ authenticateFactory = ($localStorage, $http, $rootScope, $q, $location) ->
     #Solution before Grindr used login captchas: NodeJS HTTP
     #New solution: login form in iFrame intercepting response with chrome.webRequest
     onSuccessfulLogin = (response) ->
-        console.debug(response)
         redirection_link = _.findWhere(response.responseHeaders, name: "Location").value
         $localStorage.authenticationToken = redirection_link.split('authenticationToken=')[1].split('&')[0]
         $rootScope.profileId = $localStorage.profileId = parseInt(redirection_link.split('profileId=')[1])
@@ -27,7 +26,16 @@ authenticateFactory = ($localStorage, $http, $rootScope, $q, $location) ->
             -> $location.path('/profiles')
             -> alert('Your account is probably banned')
         )
-    chrome.webRequest.onHeadersReceived.addListener(onSuccessfulLogin, urls: ["https://account.grindr.com/sessions?locale=en"], ["responseHeaders"])
+
+        return cancel: true
+    chrome.webRequest.onHeadersReceived.addListener(
+        onSuccessfulLogin,
+        urls: [
+            'https://account.grindr.com/sessions?locale=en'
+            'https://account.grindr.com/users?locale=en'
+        ],
+        ['responseHeaders', 'blocking']
+    )
 
     authenticateFunction = ->
         $q (resolve, reject) ->
