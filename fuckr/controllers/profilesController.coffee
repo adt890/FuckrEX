@@ -23,6 +23,7 @@ profilesController = ($scope, $interval, $localStorage, $routeParams, $window, p
     autocomplete = new google.maps.places.Autocomplete(document.getElementById('location'))
     google.maps.event.addListener autocomplete, 'place_changed', ->
         place = autocomplete.getPlace()
+        $scope.$storage.location = place.formatted_address
         if place.geometry
             $scope.$storage.grindrParams.lat = place.geometry.location.lat()
             $scope.$storage.grindrParams.lon = place.geometry.location.lng()
