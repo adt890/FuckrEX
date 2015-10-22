@@ -78,8 +78,6 @@ chat = ($http, $localStorage, $rootScope, $q, profiles) ->
 
         client.on 'message', (_, json) ->
             message = angular.fromJson(json)
-            console.debug(message)
-            alert(JSON.stringify message)
             addMessage(message)
             #UGLY: acknowledging XMPP messages with HTTP
             acknowledgeMessages([message.messageId])
