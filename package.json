@@ -1,8 +1,8 @@
 {
   "name": "fuckr",
-  "version": "1.1.0",
+  "version": "1.2.0",
   "description": "Desktop grindr client for Mac and Windows",
-  "main": "build.js",
+  "main": "package.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },
