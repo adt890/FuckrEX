@@ -1,4 +1,4 @@
-xmpp = require('simple-xmpp')
+jacasr = require('jacasr')
 
 #Grindr chat messages are JSON objects sent and received with XMPP:
 #   addresses: "{profileId}@chat.grindr.com"
@@ -11,6 +11,7 @@ chat = ($http, $localStorage, $rootScope, $q, profiles) ->
     s4 = -> Math.floor((1 + Math.random()) * 0x10000).toString(16).substring(1)
     uuid = -> "#{s4()}#{s4()}-#{s4()}-#{s4()}-#{s4()}-#{s4()}#{s4()}#{s4()}".toUpperCase()
 
+    client = {}
 
     $localStorage.conversations = $localStorage.conversations || {}
     $localStorage.sentImages = $localStorage.sentImages || []
@@ -56,13 +57,16 @@ chat = ($http, $localStorage, $rootScope, $q, profiles) ->
     
 
     $rootScope.$on 'authenticated', (event, token) ->
-        xmpp.connect
-            jid: "#{$localStorage.profileId}@chat.grindr.com"
-            password: token
-            host: 'chat.grindr.com'
-            preferred: 'PLAIN'
-            #disallowTLS: true
-        xmpp.on 'online', (data) ->
+        try
+          client = new jacasr.Client
+              login: $localStorage.profileId
+              password: token
+              domain: 'chat.grindr.com'
+        catch
+            $rootScope.chatError = true
+            alert("chat error: #{message}. If you're using public wifi, XMPP protocol is probably blocked.")
+
+        client.on 'ready', ->
             chat.connected = true
             $http.get('https://primus.grindr.com/2.0/undeliveredChatMessages').then (response) ->
                 messageIds = []
@@ -72,19 +76,13 @@ chat = ($http, $localStorage, $rootScope, $q, profiles) ->
                 if messageIds.length > 0
                     acknowledgeMessages(messageIds)
 
-        #bypassing simple-xmpp as xmpp.on 'message' doesn't work here
-        xmpp.conn.on 'stanza', (stanza) ->
-            if stanza.is('message')
-                message = angular.fromJson(stanza.getChildText('body'))
-                addMessage(message)
-                #UGLY: acknowledging XMPP messages with HTTP
-                acknowledgeMessages([message.messageId])
-
-        xmpp.on 'error', (message) ->
-            $rootScope.chatError = true
-            xmpp.disconnect()
-            alert("chat error: #{message}. If you're using public wifi, XMPP protocol is probably blocked.")
-
+        client.on 'message', (_, json) ->
+            message = angular.fromJson(json)
+            console.debug(message)
+            alert(JSON.stringify message)
+            addMessage(message)
+            #UGLY: acknowledging XMPP messages with HTTP
+            acknowledgeMessages([message.messageId])
 
     sendMessage = (type, body, to, save=true) ->
         message =
@@ -95,7 +93,7 @@ chat = ($http, $localStorage, $rootScope, $q, profiles) ->
             sourceDisplayName: ''
             sourceProfileId: String($localStorage.profileId)
             body: body
-        xmpp.send("#{to}@chat.grindr.com", angular.toJson(message))
+        client.push("#{to}@chat.grindr.com", angular.toJson(message))
         addMessage(message) if save
 
     return {

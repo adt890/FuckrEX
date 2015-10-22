@@ -6,7 +6,6 @@ fuckr is a Grindr™ client for desktop built with Node Webkit, node-xmpp and An
 First, install node-webkit (eg. `npm install -g nodewebkit`). Then
 
     cd fuckr/
-    npm install
     nw .
 
 ##Package

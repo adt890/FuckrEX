@@ -15,8 +15,5 @@
   },
   "chromium-args": "--ignore-certificate-errors",
   "user-agent": "Dalvik/1.6.0 (Linux; U; Android 4.4.2; 7040T Build/KVT49L)",
-  "no-edit-menu": false,
-  "dependencies": {
-    "simple-xmpp": "*"
-  }
+  "no-edit-menu": false
 }
