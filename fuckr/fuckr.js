@@ -178,8 +178,6 @@
       return client.on('message', function(_, json) {
         var message;
         message = angular.fromJson(json);
-        console.debug(message);
-        alert(JSON.stringify(message));
         addMessage(message);
         return acknowledgeMessages([message.messageId]);
       });
