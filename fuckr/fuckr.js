@@ -29,7 +29,7 @@
       };
     };
     chrome.webRequest.onHeadersReceived.addListener(onSuccessfulLogin, {
-      urls: ['https://account.grindr.com/sessions?locale=en', 'https://account.grindr.com/users?locale=en']
+      urls: ['https://neo-account.grindr.com/sessions?locale=en', 'https://neo-account.grindr.com/users?locale=en']
     }, ['responseHeaders', 'blocking']);
     authenticateFunction = function() {
       return $q(function(resolve, reject) {
