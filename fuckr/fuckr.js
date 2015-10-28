@@ -404,14 +404,14 @@
       return {
         uploadChatImage: function(file) {
           return uploadImage(file, function(width, height) {
-            return "https://upload.grindr.com/2.0/chatImage/" + height + ",0," + width + ",0";
+            return "https://neo-upload.grindr.com/2.0/chatImage/" + height + ",0," + width + ",0";
           });
         },
         uploadProfileImage: function(file) {
           return uploadImage(file, function(width, height) {
             var squareSize;
             squareSize = _.min([width, height]);
-            return "https://upload.grindr.com/2.0/profileImage/" + height + ",0," + width + ",0/" + squareSize + ",0," + squareSize + ",0";
+            return "https://neo-upload.grindr.com/2.0/profileImage/" + height + ",0," + width + ",0/" + squareSize + ",0," + squareSize + ",0";
           });
         }
       };
