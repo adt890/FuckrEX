@@ -29,7 +29,8 @@
   <div id="profile" ng-show="profile">
     <img class="pure-img" ng-src="http://cdns.grindr.com/images/profile/1024x1024/{{profile.profileImageMediaHash}}"/>
 
-    <h3 id="headline">{{profile.headline}}</h3>
+    <h2 ng-show="profile.displayName">{{profile.displayName}}</h2>
+    <h3 ng-show="profile.headline" id="headline">{{profile.headline}}</h3>
 
     <p>{{profile.aboutMe}}</p>
 
