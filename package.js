@@ -2,9 +2,9 @@ var NwBuilder = require('nw-builder');
 var nw = new NwBuilder({
   files: 'fuckr/**',
   platforms: ['win32', 'osx64', 'linux64', 'win64'],
-  version: '0.13.0-alpha4',
+  version: '0.12.1',
   appName: 'Fuckr',
-  appVersion: '0.13.0-alpha4',
+  appVersion: '1.3.0',
   winIco: /^win/.test(process.platform) ? 'icons/win.ico' : null,
   macIcns: 'icons/mac.icns'
 });
