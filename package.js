@@ -1,4 +1,4 @@
-var NwBuilder = require('node-webkit-builder');
+var NwBuilder = require('nw-builder');
 var nw = new NwBuilder({
   files: 'fuckr/**',
   platforms: ['win32', 'osx64', 'linux64', 'win64'],

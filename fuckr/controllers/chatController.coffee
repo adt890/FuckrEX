@@ -4,6 +4,7 @@ chatController = ($scope, $routeParams, chat, uploadImage) ->
     $scope.open = (id) ->
         $scope.conversationId = id
         $scope.conversation = chat.getConversation(id)
+        $scope.conversation.unread = false if $scope.conversation
         $scope.sentImages = null
     $scope.open($routeParams.id) if $routeParams.id
 

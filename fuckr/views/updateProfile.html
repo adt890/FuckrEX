@@ -4,7 +4,10 @@
   <form id="login" class="pure-form pure-form-stacked">
     <fieldset>
       <legend>Update Profile</legend>
-
+	  
+      <label for="headline">Display Name</label>
+      <input ng-change="updateAttribute('displayName')" ng-model="profile.displayName" class="pure-input-1" id="displayName" type="text" maxlength="15">
+	  
       <label for="headline">Headline</label>
       <input ng-change="updateAttribute('headline')" ng-model="profile.headline" class="pure-input-1" id="headline" type="text" maxlength="80">
 
@@ -27,7 +30,11 @@
           <input ng-change="updateAttribute('weight')" ng-model="profile.weight" type="number" class="pure-u-23-24" id="weight">
         </div>
       </div>
-
+	  
+      <label for="show-distance" class="pure-checkbox">
+        <input ng-change="updateAttribute('showDistance')" ng-model="profile.showDistance" ng-true-value="true" ng-false-value="false" id="show-distance" type="checkbox"> Show distance
+      </label>
+	  
       <legend>New profile image</legend>
       <p>Please upload a square image. If your image isn't a square, the thumbnail will be the biggest square from the upper right-left corner</p>
       <input ng-hide="uploading" type="file" accept="image/jpg,image/jpeg" file-model="imageFile" class="pure-input-1">

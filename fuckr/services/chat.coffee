@@ -47,8 +47,10 @@ chat = ($http, $localStorage, $rootScope, $q, profiles) ->
                 else {text: message.type + ' ' + message.body}
             message.fromMe = fromMe
             $localStorage.conversations[id].messages.push(message)
-
-
+            unless fromMe
+                $localStorage.conversations[id].unread = true
+                document.getElementById('notification').play()
+            
         $rootScope.$broadcast('new_message')
 
 

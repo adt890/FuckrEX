@@ -17,9 +17,10 @@
   </div>
 
   <!-- Picture grid-->
-  <div class="pure-g">
-    <a ng-repeat="profile in nearbyProfiles" class="pure-u-1-5" ng-click="open(profile.profileId)">
-      <img class="pure-img" ng-src="http://cdns.grindr.com/images/thumb/187x187/{{profile.profileImageMediaHash}}"/>
+  <div class="pure-g" >
+    <a ng-repeat="profile in nearbyProfiles" style="position:relative;" class="pure-u-1-5" ng-click="open(profile.profileId)">
+		<img class="pure-img" ng-src="http://cdns.grindr.com/images/thumb/187x187/{{profile.profileImageMediaHash}}"/>
+		<div class="caption textoverlay">{{profile.displayName}}</div>				
     </a>
   </div>
 </div>
@@ -28,9 +29,8 @@
 <div class="pure-u-1-2 scroll">
   <div id="profile" ng-show="profile">
     <img class="pure-img" ng-src="http://cdns.grindr.com/images/profile/1024x1024/{{profile.profileImageMediaHash}}"/>
-
-    <h2 ng-show="profile.displayName">{{profile.displayName}}</h2>
-    <h3 ng-show="profile.headline" id="headline">{{profile.headline}}</h3>
+    <h2 id="displayName"}>{{profile.displayName}}</h2>
+    <h3 id="headline">{{profile.headline}}</h3>
 
     <p>{{profile.aboutMe}}</p>
 
@@ -41,6 +41,8 @@
     </p>
 
     <p ng-show="profile.lookingFor && profile.lookingFor.indexOf(7) != -1" style="color: red">Looking for Right Now</p>
+
+    <p>Last seen: {{profile.seen | timeago}}</p>
 
     <table class="pure-table">
       <thead>

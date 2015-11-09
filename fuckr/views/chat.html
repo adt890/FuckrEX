@@ -1,5 +1,6 @@
 <div class="pure-u-1-2 scroll">
-  <div class="pure-g conversation" ng-repeat="conversation in lastestConversations">
+  <div ng-repeat="conversation in lastestConversations"
+       ng-class="['pure-g', 'conversation', conversation.unread ? 'unread' : '']" >
     <a ng-href="#/profiles/{{conversation.id}}">
       <img class="thumbnail" ng-src="http://cdns.grindr.com/images/thumb/187x187/{{conversation.thumbnail}}">
     </a>
