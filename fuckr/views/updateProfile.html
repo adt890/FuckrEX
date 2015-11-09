@@ -31,11 +31,9 @@
         </div>
       </div>
 	  
-	  <label for="showDistance">Mark to show distance</label>
-      <input ng-change="updateAttribute('showDistance')" ng-model="profile.showDistance" ng-true-value="true" ng-false-value="false" class="pure-input-1" id="showDistance" type="checkbox">
-
-	  <label for="showAge">Mark to show Age</label>
-      <input ng-change="updateAttribute('showAge')" ng-model="profile.showAge" ng-true-value="true" ng-false-value="false" class="pure-input-1" id="showAge" type="checkbox">
+      <label for="show-distance" class="pure-checkbox">
+        <input ng-change="updateAttribute('showDistance')" ng-model="profile.showDistance" ng-true-value="true" ng-false-value="false" id="show-distance" type="checkbox"> Show distance
+      </label>
 	  
       <legend>New profile image</legend>
       <p>Please upload a square image. If your image isn't a square, the thumbnail will be the biggest square from the upper right-left corner</p>
