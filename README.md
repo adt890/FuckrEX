@@ -1,21 +1,6 @@
 #[fuckr](http://fuckr.me/): Grindr™ for [Mac](http://fuckr.me/downloads/Fuckr.dmg) and [Windows](http://fuckr.me/downloads/Fuckr.dmg)
 
-fuckr is a Grindr™ client for desktop built with Node Webkit, node-xmpp and Angular.
-
-##This is VictorGrego improvements of Fuckr
-
-Patch Notes:
-- Emits a notification sound when a message arrives.
-- Names are now shown over the profile pictures when you hover your mouse;
-- Profiles now display their names on the profile view;
-- Profiles now display the "Last Seen" information;
-- Unread messages are shown in lighter gray until you read them;
-- Images received are now links, therefore, you can see them bigger;
-- Update Profile now includes "Show Distance" and "Show Age" options;
-- Update Profile now have a Display Name Field;
-- Other small improvements;
-
-NOTE: I coded all in the fuckr.js, therefore you should not be able to get the best of compiling the .coffee
+fuckr is a Grindr™ client for desktop built with Node-Webkit, AngularJS and a modified version of [jacasr](/tdebarochez/jacasr).
 
 ##Run
 First, install node-webkit (eg. `npm install -g nodewebkit`). Then
@@ -41,4 +26,6 @@ Releases history is hosted in gh-pages branch so to fetch code only use
 `git clone https://github.com/tomlandia/fuckr.git --branch master --single-branch`
 
 ##Credits
-Package structure and landing page originally copied from [Kyle Power's](https://twitter.com/mfkp/)'s [Tinder++](https://github.com/mfkp/tinderplusplus).
+- Logo: [Reyson Morales](http://reyson-morales.deviantart.com/)
+- Contributions: [Victor Grego](/victorgrego)
+- Download Page: [Kyle Power's](https://twitter.com/mfkp/) (copied from [Tinder++](https://github.com/mfkp/tinderplusplus))
