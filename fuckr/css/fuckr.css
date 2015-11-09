@@ -18,7 +18,7 @@ aside {
 #logo-bar {
     width: 100%;
     height: 4em;
-    background: #000
+    background: linear-gradient(#ED1E79, #9E005D); 
 }
 #logo {
     height: 3.83em;
@@ -69,28 +69,22 @@ html, body, #container {
     max-width: 70%;
 }
 
-.conversationUnread{
-	border-bottom: 1px solid #ddd;
-    padding: 0;
-    margin: 0 5px;
-    height: 5.5em !important;
-	background-color: gray;
-	color: black;
-}
-
 .conversation {
     border-bottom: 1px solid #ddd;
     padding: 0;
     margin: 0 5px;
     height: 5.5em !important;
 }
+.unread {
+    background-color: #666666 !important;
+}
 
-.conversationThumbnail {
+.conversation .thumbnail {
     float: left;
     height: 5.5em;
     width: 5.5em;
 }
-.conversationLastMessages {
+.conversation .lastMessages {
     width: calc(100% - 5.5em);
     float: right;
     text-align: center;

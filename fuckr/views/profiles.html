@@ -29,7 +29,7 @@
 <div class="pure-u-1-2 scroll">
   <div id="profile" ng-show="profile">
     <img class="pure-img" ng-src="http://cdns.grindr.com/images/profile/1024x1024/{{profile.profileImageMediaHash}}"/>
-	<h2 id="displayName"}>{{profile.displayName}}</h2>
+    <h2 id="displayName"}>{{profile.displayName}}</h2>
     <h3 id="headline">{{profile.headline}}</h3>
 
     <p>{{profile.aboutMe}}</p>
@@ -41,7 +41,9 @@
     </p>
 
     <p ng-show="profile.lookingFor && profile.lookingFor.indexOf(7) != -1" style="color: red">Looking for Right Now</p>
-	<div id="lastseen">Last seen: {{profile.seen | date:'medium'}}</div>
+
+    <p>Last seen: {{profile.seen | timeago}}</p>
+
     <table class="pure-table">
       <thead>
         <tr>

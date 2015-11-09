@@ -48,6 +48,6 @@ profilesController = ($scope, $interval, $localStorage, $routeParams, $window, p
 
 
 angular
-    .module('profilesController', ['ngRoute', 'ngStorage', 'profiles', 'pinpoint'])
+    .module('profilesController', ['ngtimeago', 'ngRoute', 'ngStorage', 'profiles', 'pinpoint'])
     .controller 'profilesController',
                ['$scope', '$interval', '$localStorage', '$routeParams', '$window', 'profiles', 'pinpoint', profilesController]

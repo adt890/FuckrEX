@@ -427,7 +427,9 @@
     $scope.open = function(id) {
       $scope.conversationId = id;
       $scope.conversation = chat.getConversation(id);
-      chat.conversation.unread = false;
+      if ($scope.conversation) {
+        $scope.conversation.unread = false;
+      }
       return $scope.sentImages = null;
     };
     if ($routeParams.id) {
@@ -529,7 +531,7 @@
     };
   };
 
-  angular.module('profilesController', ['ngRoute', 'ngStorage', 'profiles', 'pinpoint']).controller('profilesController', ['$scope', '$interval', '$localStorage', '$routeParams', '$window', 'profiles', 'pinpoint', profilesController]);
+  angular.module('profilesController', ['ngtimeago', 'ngRoute', 'ngStorage', 'profiles', 'pinpoint']).controller('profilesController', ['$scope', '$interval', '$localStorage', '$routeParams', '$window', 'profiles', 'pinpoint', profilesController]);
 
   updateProfileController = function($scope, $http, $rootScope, profiles, uploadImage) {
     $scope.profile = {};
