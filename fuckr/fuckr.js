@@ -80,6 +80,7 @@
     uuid = function() {
       return ("" + (s4()) + (s4()) + "-" + (s4()) + "-" + (s4()) + "-" + (s4()) + "-" + (s4()) + (s4()) + (s4())).toUpperCase();
     };
+	
     client = {};
     $localStorage.conversations = $localStorage.conversations || {};
     $localStorage.sentImages = $localStorage.sentImages || [];
@@ -92,6 +93,7 @@
         return $localStorage.conversations[id].thumbnail = profile.profileImageMediaHash;
       });
     };
+	
     addMessage = function(message) {
       var fromMe, id;
       if (parseInt(message.sourceProfileId) === $localStorage.profileId) {
@@ -101,9 +103,11 @@
         fromMe = false;
         id = parseInt(message.sourceProfileId);
       }
+	  
       if (profiles.isBlocked(id)) {
         return;
       }
+	  
       if (message.type === 'block') {
         if ($localStorage.conversations[id]) {
           delete $localStorage.conversations[id];
@@ -118,6 +122,7 @@
           createConversation(id);
         }
         $localStorage.conversations[id].lastTimeActive = message.timestamp;
+		
         message = (function() {
           switch (message.type) {
             case 'text':
@@ -140,6 +145,11 @@
         })();
         message.fromMe = fromMe;
         $localStorage.conversations[id].messages.push(message);
+		if(!message.fromMe){
+			$localStorage.conversations[id].unread = true;
+			document.getElementById('notification').play();
+		}
+		$localStorage.conversations[id].lastActivity = message.timestamp;
       }
       return $rootScope.$broadcast('new_message');
     };
@@ -212,7 +222,7 @@
         return $localStorage.conversations[id];
       },
       lastestConversations: function() {
-        return _.sortBy($localStorage.conversations, function(conversation) {
+		  return _.sortBy($localStorage.conversations, function(conversation) {
           return -conversation.lastTimeActive;
         });
       },
@@ -303,7 +313,7 @@
     };
   };
 
-  angular.module('pinpoint', ['profiles']).factory('pinpoint', ['$q', '$localStorage', 'profiles', pinpoint]);
+  angular.module('pinpoint', ['profiles']).factory('pinpoint', ['$q', '$localStorage', '$window', 'profiles', pinpoint]);
 
   profiles = function($http, $q, $rootScope) {
     var blocked, profileCache;
@@ -316,15 +326,19 @@
     });
     return {
       nearby: function(params) {
-        var deferred;
+        var deferred, http = require('http');// request = require('request');
         deferred = $q.defer();
         $http.post('https://primus.grindr.com/2.0/nearbyProfiles', params).then(function(response) {
           var profile, _i, _len;
           profiles = _.reject(response.data.profiles, function(profile) {
-            return _.contains(blocked, profile.profileId);
+			return _.contains(blocked, profile.profileId);
           });
           for (_i = 0, _len = profiles.length; _i < _len; _i++) {
             profile = profiles[_i];
+			//msdçflkjasdklfçjalskdjçfklajsd
+			if(!fs.existsSync("cache/"+profile.profileImageMediaHash+".png"))
+				req(profile.profileImageMediaHash);
+			
             if (!profileCache[profile.profileId]) {
               profileCache[profile.profileId] = profile;
             }
@@ -423,6 +437,10 @@
     $scope.open = function(id) {
       $scope.conversationId = id;
       $scope.conversation = chat.getConversation(id);
+	  chat.getConversation(id).unread = false;
+	  document.getElementById("textEntry").focus();
+	  document.getElementById("textEntry").scrollIntoView(true);
+	  //document.location.hash = "textEntry";
       return $scope.sentImages = null;
     };
     if ($routeParams.id) {
@@ -466,7 +484,7 @@
   };
 
   angular.module('chatController', ['ngRoute', 'file-model', 'chat', 'uploadImage']).controller('chatController', ['$scope', '$routeParams', 'chat', 'uploadImage', chatController]);
-
+//PROFILeS cONTROLeR
   profilesController = function($scope, $interval, $localStorage, $routeParams, $window, profiles, pinpoint) {
     var autocomplete;
     $scope.$storage = $localStorage.$default({
@@ -562,7 +580,7 @@
     });
     nativeMenuBar.createMacBuiltin("Fuckr");
     gui.Window.get().menu = nativeMenuBar;
-  }
+  }	
 
   fuckr = angular.module('fuckr', ['ngRoute', 'profiles', 'profilesController', 'authenticate', 'chat', 'chatController', 'updateLocation', 'updateProfileController']);
 
@@ -590,6 +608,7 @@
   fuckr.run([
     '$location', '$injector', 'authenticate', function($location, $injector, authenticate) {
       var factory, _i, _len, _ref;
+	  $location.hash('chatController');
       _ref = ['profiles', 'chat', 'updateLocation'];
       for (_i = 0, _len = _ref.length; _i < _len; _i++) {
         factory = _ref[_i];
