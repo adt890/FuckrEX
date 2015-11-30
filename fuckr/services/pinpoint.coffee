@@ -37,10 +37,6 @@ pinpoint = ($q, $localStorage, profiles) ->
         }
 
 
-    randomizedLocation = ->
-        lat: $localStorage.grindrParams.lat + ((Math.random() - 0.5) / 100) #+/- ~500m north
-        lon: $localStorage.grindrParams.lon + ((Math.random() - 0.5) / 100) #+/- ~500m east
-
 
     return (id) ->
         deferred = $q.defer()
